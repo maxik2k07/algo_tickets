@@ -1,0 +1,3087 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALGO — GRADUATION</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Bagel+Fat+One&family=Bungee+Shade&family=Bungee&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   GRADUATION — sky, clouds, a flying bear
+   original composition — not a reproduction
+═══════════════════════════════════════════ */
+
+:root{
+  --sky-top:   #4a1a6b;   /* deep violet-purple */
+  --sky-mid1:  #8b2d7e;   /* magenta-purple */
+  --sky-mid2:  #d94977;   /* pink-rose */
+  --sky-mid3:  #ff7a5c;   /* coral */
+  --sky-low:   #ff9a5a;   /* orange */
+  --sky-bot:   #2a0e4a;   /* deep night purple (bottom of page) */
+  --pink: #ff5ea0;
+  --peach: #ff9a5a;
+  --gold: #ffd24d;
+  --violet: #6a2d9e;
+  --ink: #1a0830;
+  --cream: #fff4e8;
+  --cloud-a: #ffd6da;
+  --cloud-b: #e8a8c4;
+  --cloud-c: #c57ab0;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+html,body{
+  overflow-x:hidden;
+  background: var(--sky-top);
+  font-family:'Inter', 'DM Sans', sans-serif;
+  color: var(--ink);
+  scroll-behavior: smooth;
+}
+
+/* main sky gradient: sunset violet-pink-orange, shifting subtly */
+.sky-backdrop{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  background:
+    linear-gradient(180deg,
+      #3a0f5c 0%,
+      #5a1a7d 6%,
+      #7b2188 12%,
+      #a32a84 20%,
+      #c93877 30%,
+      #e85574 42%,
+      #f6755e 55%,
+      #ff8f54 68%,
+      #e0628b 80%,
+      #6a2482 92%,
+      #2a0e4a 100%);
+  z-index:-2;
+  background-size: 100% 200%;
+  animation: skyshift 18s ease-in-out infinite alternate;
+}
+@keyframes skyshift{
+  0%   { background-position: 0% 0%; filter: hue-rotate(0deg); }
+  50%  { filter: hue-rotate(-8deg); }
+  100% { background-position: 0% 6%; filter: hue-rotate(4deg); }
+}
+
+/* soft painterly haze layer on top of gradient */
+.sky-haze{
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:-1;
+  background:
+    radial-gradient(ellipse 60% 40% at 80% 10%, rgba(255,180,200,.35), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 20% 30%, rgba(120,40,130,.35), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 60% 60%, rgba(255,150,100,.25), transparent 70%);
+  mix-blend-mode: screen;
+  animation: hazeshift 22s ease-in-out infinite alternate;
+}
+@keyframes hazeshift{
+  0%   { transform: translate3d(0,0,0) scale(1); opacity:.9; }
+  100% { transform: translate3d(-30px, 20px, 0) scale(1.08); opacity:1; }
+}
+
+/* subtle grain */
+body::after{
+  content:'';
+  position:fixed; inset:0; pointer-events:none; z-index:200;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  opacity:.14; mix-blend-mode: overlay;
+}
+
+/* ── FIXED HEADER STRIP ── */
+.top-bar{
+  position:fixed; top:0; left:0; right:0; z-index:50;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 28px;
+  font-family:'Space Mono', monospace;
+  font-size:.68rem; letter-spacing:3px; text-transform:uppercase;
+  color:#fff; mix-blend-mode: difference;
+  pointer-events:none;
+}
+.top-bar > *{pointer-events:auto}
+.brand{
+  font-family:'Bagel Fat One', 'Rubik Mono One', sans-serif;
+  font-size:1.4rem; letter-spacing:1px;
+  -webkit-text-stroke: 1px #1a0830;
+}
+.top-bar .meta{display:flex; gap:18px; opacity:.9}
+
+/* ═══════════════════════════════════════════
+   HERO — flying bear intro
+═══════════════════════════════════════════ */
+.hero{
+  position:relative;
+  height:100vh;
+  min-height:720px;
+  width:100%;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* distant hills/mountains at horizon */
+.horizon{
+  position:absolute; bottom:0; left:0; right:0;
+  height:42%;
+  pointer-events:none;
+  z-index:1;
+}
+
+.hero-title{
+  position:absolute;
+  top:14%;
+  left:50%;
+  transform:translateX(-50%);
+  text-align:center;
+  z-index:4;
+  pointer-events:none;
+  mix-blend-mode: multiply;
+}
+.hero-title h1{
+  font-family:'Bagel Fat One', sans-serif;
+  font-size:clamp(4rem, 13vw, 12rem);
+  line-height:.88;
+  color:#ff4ea3;
+  letter-spacing:-2px;
+  -webkit-text-stroke: 3px #1a0830;
+  text-shadow:
+    6px 6px 0 #1a0830,
+    -1px -1px 0 #fff;
+}
+.hero-title .tag{
+  font-family:'Bungee', sans-serif;
+  font-size:clamp(.8rem, 1.4vw, 1.2rem);
+  margin-top:18px;
+  color:#fff;
+  letter-spacing:2px;
+  text-shadow: 2px 2px 0 #1a0830;
+  text-transform: uppercase;
+}
+.hero-caption{
+  position:absolute;
+  bottom:8%;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:4;
+  text-align:center;
+  color:#fff;
+  font-family:'Space Mono', monospace;
+  font-size:.7rem;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  pointer-events:none;
+  text-shadow:0 2px 6px rgba(0,0,0,.3);
+}
+.hero-caption .arrow{
+  display:block;
+  font-size:1.6rem;
+  margin-top:10px;
+  animation: bob 1.8s ease-in-out infinite;
+}
+@keyframes bob{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(8px)}
+}
+
+/* BEAR (original mascot, SVG) — interactive */
+.bear-stage{
+  position:absolute;
+  z-index:3;
+  width:min(46vw, 520px);
+  height:min(46vw, 520px);
+  top:50%; left:50%;
+  transform: translate(-50%, -40%);
+  pointer-events:none;
+  will-change: transform;
+}
+.bear-stage svg{
+  width:100%; height:100%;
+  pointer-events:auto;
+  cursor: grab;
+  filter: drop-shadow(0 20px 25px rgba(30,10,40,.25));
+  animation: float 6s ease-in-out infinite;
+}
+.bear-stage:active svg{cursor:grabbing}
+
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(-2deg)}
+  50%{transform:translateY(-18px) rotate(2deg)}
+}
+
+/* sparkle stars around bear */
+.sparkle{
+  position:absolute;
+  color:#fff;
+  font-family:'Bungee',sans-serif;
+  font-size:1.2rem;
+  text-shadow:0 0 8px rgba(255,255,255,.6);
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+@keyframes twinkle{
+  0%,100%{opacity:.3; transform:scale(.8)}
+  50%{opacity:1; transform:scale(1.1)}
+}
+
+/* ═══════════════════════════════════════════
+   CLOUDS SECTION
+═══════════════════════════════════════════ */
+.clouds-section{
+  position:relative;
+  width:100%;
+  /* height grows with number of clouds; set via --ch from JS */
+  height: var(--ch, 3800px);
+  overflow:visible;
+  z-index:2;
+}
+
+.clouds-section::before{
+  content:'';
+  position:absolute;
+  top:-140px; left:0; right:0; height:180px;
+  background: linear-gradient(180deg, rgba(247,183,212,0) 0%, rgba(255,211,140,.0) 40%, rgba(255,227,160,0) 100%);
+  pointer-events:none;
+}
+
+.section-label{
+  position:absolute;
+  left:50%; transform:translateX(-50%);
+  top: 40px;
+  z-index:5;
+  text-align:center;
+  color:#fff;
+  pointer-events:none;
+  mix-blend-mode: overlay;
+}
+.section-label .kicker{
+  font-family:'Space Mono', monospace;
+  font-size:.7rem; letter-spacing:6px; text-transform:uppercase;
+  opacity:.85;
+}
+.section-label h2{
+  font-family:'Bagel Fat One', sans-serif;
+  font-size:clamp(2.4rem, 6vw, 4.4rem);
+  color:#fff;
+  letter-spacing:-1px;
+  margin-top:8px;
+  -webkit-text-stroke: 2px #1a0830;
+  text-shadow:4px 4px 0 #1a0830;
+}
+
+/* Individual cloud — painterly soft blob */
+.cloud{
+  position:absolute;
+  width:300px;
+  height:180px;
+  cursor:pointer;
+  transition: transform .35s cubic-bezier(.2,.9,.3,1.2), filter .35s;
+  filter: drop-shadow(0 18px 30px rgba(40,10,60,.35));
+}
+.cloud-svg{
+  width:100%; height:100%;
+  display:block;
+  filter: blur(.6px);
+}
+.cloud:hover{
+  transform: translateY(-10px) scale(1.08);
+  filter: drop-shadow(0 24px 40px rgba(255,100,150,.4)) brightness(1.1);
+  z-index: 20;
+}
+.cloud .cnum{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%, -50%);
+  font-family:'Bagel Fat One', sans-serif;
+  font-size:3.6rem;
+  color: #fff;
+  letter-spacing:-1px;
+  -webkit-text-stroke: 3px #1a0830;
+  text-shadow:
+    4px 4px 0 #1a0830,
+    0 0 20px rgba(255,200,230,.8);
+  pointer-events:none;
+  z-index:3;
+}
+.cloud .clabel{
+  position:absolute;
+  bottom: -14px;
+  left:50%;
+  transform:translateX(-50%) translateY(-4px);
+  white-space:nowrap;
+  background: #1a0830;
+  color:#ffd24d;
+  padding: 5px 14px;
+  border-radius: 100px;
+  font-family:'Bungee', sans-serif;
+  font-size:.58rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  opacity:0;
+  transition: opacity .25s, transform .25s;
+  pointer-events:none;
+  max-width: 280px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  border: 2px solid #ff5ea0;
+  z-index:4;
+}
+.cloud:hover .clabel{
+  opacity:1;
+  transform:translateX(-50%) translateY(6px);
+}
+
+/* iridescent drift — each cloud's gradient slowly animates */
+.cloud.drift{
+  animation: drift var(--dur,8s) ease-in-out infinite;
+  animation-delay: var(--delay,0s);
+}
+@keyframes drift{
+  0%,100%{transform:translateY(0) translateX(0)}
+  33%{transform:translateY(-18px) translateX(6px)}
+  66%{transform:translateY(-8px) translateX(-6px)}
+}
+
+/* hue cycle on cloud fill */
+.cloud-svg .cloud-body{
+  animation: cloudhue var(--huedur, 12s) ease-in-out infinite;
+  animation-delay: var(--huedelay, 0s);
+  transform-origin: center;
+}
+@keyframes cloudhue{
+  0%,100% { filter: hue-rotate(0deg) saturate(1); }
+  50%     { filter: hue-rotate(-20deg) saturate(1.25); }
+}
+
+/* small birds / planes silhouettes — original */
+.birds{
+  position:absolute;
+  top:0; left:0; right:0; height:100%;
+  pointer-events:none;
+  z-index:1;
+  overflow:hidden;
+}
+.bird{
+  position:absolute;
+  font-family:'Bungee',sans-serif;
+  color: rgba(30,20,40,.4);
+  font-size:.9rem;
+}
+
+/* floor sparkle confetti */
+.confetti{
+  position:absolute;
+  width:10px; height:10px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  opacity:.7;
+  animation: conf 4s linear infinite;
+}
+@keyframes conf{
+  0%{transform: rotate(0) translateY(0)}
+  100%{transform: rotate(720deg) translateY(40px)}
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER after clouds
+═══════════════════════════════════════════ */
+.footer{
+  position:relative;
+  z-index:3;
+  padding:140px 32px 80px;
+  text-align:center;
+  color:#dfe8ff;
+}
+.footer h3{
+  font-family:'Bagel Fat One', sans-serif;
+  font-size:clamp(2.4rem, 7vw, 5rem);
+  color:#ff4ea3;
+  letter-spacing:-1px;
+  margin-bottom:16px;
+  -webkit-text-stroke: 2px #1a0830;
+  text-shadow:5px 5px 0 #1a0830;
+}
+.footer p{
+  font-family:'Inter', sans-serif;
+  font-size:1.05rem;
+  color:#f0d8ee;
+  max-width:560px;
+  margin:0 auto 26px;
+  line-height:1.6;
+}
+.footer .meta-line{
+  font-family:'Space Mono', monospace;
+  font-size:.65rem;
+  letter-spacing:3px;
+  color:#8ba0c8;
+  text-transform:uppercase;
+  padding-top:30px;
+  border-top:1px solid rgba(255,255,255,.1);
+  max-width:400px;
+  margin: 40px auto 0;
+}
+
+/* stars field in footer */
+.stars{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.star{
+  position:absolute;
+  width:2px; height:2px;
+  background:#fff;
+  border-radius:50%;
+  box-shadow:0 0 6px #fff;
+  animation: tw 3s ease-in-out infinite;
+}
+@keyframes tw{
+  0%,100%{opacity:.3}
+  50%{opacity:1}
+}
+
+/* ═══════════════════════════════════════════
+   TICKET READER — full-screen overlay
+═══════════════════════════════════════════ */
+.reader{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background: #fff7e8;
+  display:none;
+  overflow-y:auto;
+}
+.reader.open{display:block}
+
+.reader-topbar{
+  position:sticky; top:0; z-index:10;
+  background: var(--ink);
+  color:#fff;
+  padding: 14px 28px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom: 4px solid var(--gold);
+}
+.reader-topbar .r-brand{
+  font-family:'Bungee', sans-serif;
+  font-size:1rem;
+  letter-spacing:1px;
+  display:flex; align-items:center; gap:12px;
+}
+.r-brand .chip{
+  background: var(--gold);
+  color: var(--ink);
+  padding:3px 10px;
+  border-radius:100px;
+  font-size:.65rem;
+  letter-spacing:3px;
+}
+.reader-topbar .r-close{
+  background: var(--pink);
+  color:#fff;
+  border:none;
+  padding: 10px 22px;
+  border-radius:100px;
+  font-family:'Bungee', sans-serif;
+  font-size:.7rem;
+  letter-spacing:2px;
+  cursor:pointer;
+  transition: transform .15s, background .2s;
+}
+.reader-topbar .r-close:hover{background: var(--violet); transform:scale(1.05)}
+
+/* cloud strip navigation across top */
+.cloud-strip{
+  display:flex; gap:6px;
+  overflow-x:auto;
+  padding: 10px 18px;
+  background: linear-gradient(180deg, #ffe0ea, #ffeed2);
+  border-bottom: 2px solid #1a1226;
+  scrollbar-width: thin;
+}
+.cs-btn{
+  flex-shrink:0;
+  min-width:44px;
+  padding:6px 12px;
+  background:#fff;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  border-radius: 100px;
+  font-family:'Bungee', sans-serif;
+  font-size:.72rem;
+  cursor:pointer;
+  transition: transform .15s, background .2s;
+}
+.cs-btn:hover{background:var(--gold); transform:translateY(-2px)}
+.cs-btn.active{background: var(--ink); color: var(--gold)}
+
+.ticket-wrap{
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 50px 28px 120px;
+  color: var(--ink);
+}
+
+.ticket-head{
+  margin-bottom: 30px;
+  padding-bottom: 18px;
+  border-bottom: 3px solid var(--ink);
+  display:flex; flex-direction:column; gap:8px;
+}
+.ticket-num{
+  display:inline-block;
+  align-self:flex-start;
+  background: var(--ink);
+  color: var(--gold);
+  font-family:'Space Mono', monospace;
+  font-size:.62rem;
+  letter-spacing:4px;
+  padding:5px 14px;
+  border-radius:100px;
+  text-transform:uppercase;
+}
+.ticket-title{
+  font-family:'Bungee', sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  color: var(--ink);
+  line-height:1.05;
+  letter-spacing:-.5px;
+  text-transform: uppercase;
+}
+
+.ticket-question-block{
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-left: 10px solid var(--pink);
+  border-radius: 4px;
+  padding: 18px 22px;
+  margin-bottom: 36px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.ticket-question-label{
+  font-family:'Space Mono', monospace;
+  font-size:.62rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color: var(--pink);
+  margin-bottom: 6px;
+}
+.ticket-question-text{
+  font-family:'Libre Caslon Display', serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.sec{margin-bottom: 34px}
+.sec-h{
+  font-family:'Bungee', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 12px;
+  padding: 8px 0 8px 18px;
+  border-left: 6px solid var(--gold);
+  background: linear-gradient(90deg, rgba(255,210,77,.2) 0%, transparent 60%);
+}
+.sec-b{
+  font-family:'DM Sans', sans-serif;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #2a1d3a;
+  font-weight: 400;
+}
+.sec-b strong, .hw{color: var(--ink); font-weight: 700}
+.ha{
+  color: var(--violet);
+  font-weight: 700;
+  font-family: 'Space Mono', monospace;
+  font-size: .9em;
+  background: rgba(123,91,212,.08);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+pre.code{
+  background: var(--ink);
+  color: #ffe7b8;
+  border-radius: 6px;
+  padding: 18px 20px;
+  font-family: 'Space Mono', monospace;
+  font-size: .78rem;
+  line-height: 1.7;
+  margin: 14px 0;
+  overflow-x: auto;
+  white-space: pre;
+  box-shadow: 6px 6px 0 rgba(26,18,38,.25);
+  border: 2px solid var(--ink);
+  border-top: 6px solid var(--gold);
+}
+pre.code::-webkit-scrollbar{height: 4px}
+pre.code::-webkit-scrollbar-thumb{background: var(--gold)}
+
+table.cxt{
+  width:100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+  border: 2px solid var(--ink);
+  background:#fff;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+table.cxt th{
+  background: var(--ink);
+  color: var(--gold);
+  padding: 10px 14px;
+  font-family: 'Bungee', sans-serif;
+  font-size: .75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: left;
+  border-bottom: 2px solid var(--gold);
+}
+table.cxt td{
+  padding: 10px 14px;
+  font-family:'DM Sans', sans-serif;
+  font-size: .92rem;
+  color: #2a1d3a;
+  border-bottom: 1px solid rgba(26,18,38,.1);
+  border-right: 1px solid rgba(26,18,38,.1);
+}
+table.cxt tr:last-child td{border-bottom: none}
+table.cxt tr:nth-child(even){background: rgba(255,210,77,.08)}
+
+.gloss{
+  background: linear-gradient(135deg, #e8dcff 0%, #ffe5ee 100%);
+  border: 2px solid var(--ink);
+  padding: 22px 26px;
+  margin: 28px 0;
+  box-shadow: 6px 6px 0 var(--ink);
+  border-radius: 4px;
+}
+.gloss-t{
+  font-family:'Bungee', sans-serif;
+  font-size: .95rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px dashed var(--ink);
+}
+.gloss-row{
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 14px;
+  padding: 8px 0;
+  border-bottom: 1px dotted rgba(26,18,38,.2);
+}
+.gloss-row:last-child{border-bottom: none}
+.gloss-k{
+  font-family:'Space Mono', monospace;
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--violet);
+}
+.gloss-v{
+  font-family:'DM Sans', sans-serif;
+  font-size: .92rem;
+  color: #2a1d3a;
+  line-height:1.5;
+}
+
+.quiz{
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  padding: 28px 28px 24px;
+  margin-top: 36px;
+  box-shadow: 8px 8px 0 var(--ink);
+}
+.quiz-title{
+  font-family:'Bungee', sans-serif;
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin-bottom: 22px;
+  padding-bottom: 10px;
+  border-bottom: 4px solid var(--gold);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.qblock{margin-bottom: 28px}
+.qblock:last-child{margin-bottom: 0}
+.qqtext{
+  font-family:'DM Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-bottom: 12px;
+  line-height: 1.45;
+}
+.qopts{display: flex; flex-direction: column; gap: 8px}
+.qopt{
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .92rem;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: all .15s;
+  width: 100%;
+}
+.qopt:hover:not(:disabled){background: var(--gold); transform: translateX(4px)}
+.qopt:disabled{cursor: default}
+.qopt.correct{background: #9fe6a6; border-color: #1a5528}
+.qopt.wrong{background: #ffb3c0; border-color: #8a1230}
+.qopt.reveal{opacity: .5}
+.qletter{
+  font-family:'Bungee', sans-serif;
+  font-size: .8rem;
+  background: var(--ink);
+  color: var(--gold);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.qopt.correct .qletter{background: #1a5528; color: #fff}
+.qopt.wrong .qletter{background: #8a1230; color: #fff}
+.qfb{
+  display: none;
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-family:'DM Sans', sans-serif;
+  font-size: .88rem;
+  line-height: 1.5;
+}
+.qfb.show{display: block}
+.qfb.correct{background: #9fe6a6; color: #1a5528; border-left: 4px solid #1a5528}
+.qfb.wrong{background: #ffb3c0; color: #8a1230; border-left: 4px solid #8a1230}
+
+.arrows{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 3px solid var(--ink);
+}
+.arrow-btn{
+  background: var(--ink);
+  color: var(--gold);
+  border: none;
+  padding: 14px 26px;
+  border-radius: 100px;
+  font-family:'Bungee', sans-serif;
+  font-size: .78rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: transform .15s, background .2s;
+}
+.arrow-btn:hover:not(:disabled){
+  background: var(--pink);
+  transform: translateY(-3px);
+}
+.arrow-btn:disabled{opacity: .3; cursor: default}
+
+/* mobile */
+@media (max-width: 700px){
+  .cloud{width: 200px; height: 120px}
+  .cloud .cnum{font-size: 2rem}
+  .bear-stage{width: 80vw; height: 80vw}
+  .gloss-row{grid-template-columns: 1fr; gap: 2px}
+  .ticket-wrap{padding: 30px 18px 80px}
+}
+</style>
+</head>
+<body>
+
+<div class="sky-backdrop"></div>
+<div class="sky-haze"></div>
+
+<!-- fixed header -->
+<div class="top-bar">
+  <div class="brand">ALGO / 18</div>
+  <div class="meta">
+    <span>Кликни на облако</span>
+    <span class="dot">·</span>
+    <span id="progressMeta">0 / 18</span>
+  </div>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero" id="hero">
+
+  <!-- hero title -->
+  <div class="hero-title">
+    <h1>ALGO<br>ACADEMY</h1>
+    <div class="tag">Экзамен по алгоритмам и структурам данных · 18 билетов</div>
+  </div>
+
+  <!-- sparkles -->
+  <div class="sparkle" style="top:22%; left:18%">✦</div>
+  <div class="sparkle" style="top:34%; right:22%; animation-delay:.6s">✦</div>
+  <div class="sparkle" style="bottom:28%; left:28%; animation-delay:1.2s">✧</div>
+  <div class="sparkle" style="bottom:34%; right:14%; animation-delay:.3s">✧</div>
+  <div class="sparkle" style="top:50%; left:8%; animation-delay:.9s">✦</div>
+
+  <!-- the interactive flying bear (original SVG mascot) -->
+  <div class="bear-stage" id="bearStage">
+    <svg id="bearSvg" viewBox="0 0 400 460" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="furGrad" cx=".5" cy=".4" r=".75">
+          <stop offset="0" stop-color="#a87346"/>
+          <stop offset=".55" stop-color="#7a4a25"/>
+          <stop offset="1" stop-color="#3e2312"/>
+        </radialGradient>
+        <radialGradient id="muzzleGrad" cx=".5" cy=".4" r=".7">
+          <stop offset="0" stop-color="#e6b48a"/>
+          <stop offset="1" stop-color="#b8804e"/>
+        </radialGradient>
+        <linearGradient id="jacketGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#eef1f4"/>
+          <stop offset="1" stop-color="#b8bec7"/>
+        </linearGradient>
+        <linearGradient id="jeansGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3d6fa8"/>
+          <stop offset="1" stop-color="#1f447a"/>
+        </linearGradient>
+        <radialGradient id="eyeWhite" cx=".4" cy=".4" r=".65">
+          <stop offset="0" stop-color="#ffffff"/>
+          <stop offset="1" stop-color="#e8dcd0"/>
+        </radialGradient>
+        <filter id="fluffy" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" result="noise"/>
+          <feComposite in="SourceGraphic" in2="noise" operator="arithmetic" k1="0" k2="1" k3="0.15" k4="0"/>
+        </filter>
+      </defs>
+
+      <g id="bearAll">
+
+        <!-- ===== LEGS / SNEAKERS ===== -->
+        <g transform="translate(0 0)">
+          <!-- left leg -->
+          <rect x="148" y="330" width="40" height="70" rx="18" fill="url(#jeansGrad)"/>
+          <rect x="148" y="388" width="40" height="12" fill="#0f2a52"/>
+          <!-- left sneaker -->
+          <g transform="translate(142 398)">
+            <ellipse cx="28" cy="22" rx="36" ry="20" fill="#e8ecf1"/>
+            <path d="M -6 28 Q 28 10 62 28 L 62 36 Q 28 44 -6 36 Z" fill="#ffffff"/>
+            <rect x="-6" y="30" width="68" height="8" fill="#d0d5dc"/>
+            <path d="M 20 14 Q 30 6 46 14" stroke="#2c4da0" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="26" cy="20" r="2" fill="#2c4da0"/>
+            <circle cx="40" cy="20" r="2" fill="#2c4da0"/>
+          </g>
+
+          <!-- right leg -->
+          <rect x="212" y="330" width="40" height="70" rx="18" fill="url(#jeansGrad)"/>
+          <rect x="212" y="388" width="40" height="12" fill="#0f2a52"/>
+          <!-- right sneaker -->
+          <g transform="translate(206 398)">
+            <ellipse cx="28" cy="22" rx="36" ry="20" fill="#e8ecf1"/>
+            <path d="M -6 28 Q 28 10 62 28 L 62 36 Q 28 44 -6 36 Z" fill="#ffffff"/>
+            <rect x="-6" y="30" width="68" height="8" fill="#d0d5dc"/>
+            <path d="M 20 14 Q 30 6 46 14" stroke="#2c4da0" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="26" cy="20" r="2" fill="#2c4da0"/>
+            <circle cx="40" cy="20" r="2" fill="#2c4da0"/>
+          </g>
+        </g>
+
+        <!-- ===== BODY / VARSITY JACKET ===== -->
+        <g id="bodyGroup">
+          <!-- jacket torso -->
+          <path d="M 120 240 Q 110 220 140 210 L 260 210 Q 290 220 280 240 L 285 340 Q 280 355 260 355 L 140 355 Q 120 355 115 340 Z"
+                fill="url(#jacketGrad)" stroke="#1a0830" stroke-width="3" stroke-linejoin="round"/>
+          <!-- jacket opening -->
+          <path d="M 200 210 L 200 355" stroke="#1a0830" stroke-width="2" opacity=".3"/>
+          <!-- buttons -->
+          <circle cx="200" cy="250" r="4" fill="#1a0830"/>
+          <circle cx="200" cy="280" r="4" fill="#1a0830"/>
+          <circle cx="200" cy="310" r="4" fill="#1a0830"/>
+          <!-- ribbed cuffs at bottom -->
+          <rect x="115" y="346" width="170" height="12" fill="#4a7bd4" stroke="#1a0830" stroke-width="2"/>
+          <g stroke="#2a5da8" stroke-width="1.5">
+            <line x1="130" y1="346" x2="130" y2="358"/>
+            <line x1="150" y1="346" x2="150" y2="358"/>
+            <line x1="170" y1="346" x2="170" y2="358"/>
+            <line x1="190" y1="346" x2="190" y2="358"/>
+            <line x1="210" y1="346" x2="210" y2="358"/>
+            <line x1="230" y1="346" x2="230" y2="358"/>
+            <line x1="250" y1="346" x2="250" y2="358"/>
+            <line x1="270" y1="346" x2="270" y2="358"/>
+          </g>
+          <!-- chenille letter U (varsity patch) -->
+          <g transform="translate(150 268)">
+            <rect x="-5" y="-5" width="54" height="54" rx="6" fill="#fff" stroke="#1a0830" stroke-width="2"/>
+            <text x="22" y="38" text-anchor="middle" font-family="Bagel Fat One, sans-serif" font-size="42" fill="#4a7bd4" stroke="#1a0830" stroke-width="1.5">U</text>
+          </g>
+        </g>
+
+        <!-- ===== LEFT ARM (away from body, out) ===== -->
+        <g id="armL" style="transform-origin: 120px 240px;">
+          <path d="M 120 230 Q 80 245 60 280 Q 50 305 70 320" stroke="url(#jacketGrad)" stroke-width="40" fill="none" stroke-linecap="round"/>
+          <path d="M 120 230 Q 80 245 60 280 Q 50 305 70 320" stroke="#1a0830" stroke-width="3" fill="none" stroke-linecap="round" opacity=".85" stroke-dasharray="0"/>
+          <!-- cuff -->
+          <ellipse cx="68" cy="316" rx="22" ry="8" fill="#4a7bd4" stroke="#1a0830" stroke-width="2"/>
+          <!-- paw -->
+          <circle cx="65" cy="328" r="26" fill="url(#furGrad)" stroke="#1a0830" stroke-width="3"/>
+          <!-- paw pads -->
+          <ellipse cx="60" cy="322" rx="8" ry="6" fill="#e6b48a"/>
+          <circle cx="55" cy="315" r="3.5" fill="#e6b48a"/>
+          <circle cx="65" cy="312" r="3.5" fill="#e6b48a"/>
+          <circle cx="74" cy="314" r="3.5" fill="#e6b48a"/>
+        </g>
+
+        <!-- ===== RIGHT ARM (waving) ===== -->
+        <g id="armR" style="transform-origin: 280px 240px;">
+          <path d="M 280 230 Q 320 230 340 200 Q 348 175 336 150" stroke="url(#jacketGrad)" stroke-width="40" fill="none" stroke-linecap="round"/>
+          <!-- cuff -->
+          <ellipse cx="338" cy="155" rx="22" ry="8" fill="#4a7bd4" stroke="#1a0830" stroke-width="2" transform="rotate(-25 338 155)"/>
+          <!-- paw -->
+          <circle cx="336" cy="138" r="26" fill="url(#furGrad)" stroke="#1a0830" stroke-width="3"/>
+          <!-- paw pads -->
+          <ellipse cx="338" cy="134" rx="8" ry="6" fill="#e6b48a"/>
+          <circle cx="328" cy="126" r="3.5" fill="#e6b48a"/>
+          <circle cx="338" cy="124" r="3.5" fill="#e6b48a"/>
+          <circle cx="348" cy="128" r="3.5" fill="#e6b48a"/>
+        </g>
+
+        <!-- ===== HEAD ===== -->
+        <g id="bearHead" style="transform-origin: 200px 140px;">
+          <!-- ears -->
+          <circle cx="130" cy="68" r="32" fill="url(#furGrad)" stroke="#1a0830" stroke-width="3"/>
+          <circle cx="270" cy="68" r="32" fill="url(#furGrad)" stroke="#1a0830" stroke-width="3"/>
+          <ellipse cx="130" cy="70" rx="16" ry="18" fill="#d9a676"/>
+          <ellipse cx="270" cy="70" rx="16" ry="18" fill="#d9a676"/>
+
+          <!-- head shape (big cartoon) -->
+          <ellipse cx="200" cy="140" rx="100" ry="95" fill="url(#furGrad)" stroke="#1a0830" stroke-width="3"/>
+
+          <!-- muzzle (lighter patch around nose/mouth) -->
+          <ellipse cx="200" cy="175" rx="60" ry="46" fill="url(#muzzleGrad)"/>
+
+          <!-- eyes (big cartoon buttons) -->
+          <g>
+            <!-- left eye -->
+            <circle cx="160" cy="128" r="24" fill="url(#eyeWhite)" stroke="#1a0830" stroke-width="3"/>
+            <!-- right eye -->
+            <circle cx="240" cy="128" r="24" fill="url(#eyeWhite)" stroke="#1a0830" stroke-width="3"/>
+            <!-- pupils (move with cursor) -->
+            <g id="pupils">
+              <circle id="pL" cx="160" cy="128" r="11" fill="#1a0830"/>
+              <circle id="pR" cx="240" cy="128" r="11" fill="#1a0830"/>
+              <circle cx="163" cy="124" r="3.5" fill="#fff"/>
+              <circle cx="243" cy="124" r="3.5" fill="#fff"/>
+            </g>
+            <!-- colourful iris rings (like referenced mascot style) -->
+            <circle cx="160" cy="128" r="17" fill="none" stroke="#ffb3d1" stroke-width="2" opacity=".7"/>
+            <circle cx="240" cy="128" r="17" fill="none" stroke="#ffd24d" stroke-width="2" opacity=".7"/>
+          </g>
+
+          <!-- nose -->
+          <ellipse cx="200" cy="162" rx="14" ry="10" fill="#1a0830"/>
+          <ellipse cx="196" cy="158" rx="4" ry="2.5" fill="#fff" opacity=".7"/>
+
+          <!-- mouth (small happy) -->
+          <path d="M 200 175 L 200 188" stroke="#1a0830" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 200 188 Q 186 200 178 194" fill="none" stroke="#1a0830" stroke-width="3" stroke-linecap="round"/>
+          <path d="M 200 188 Q 214 200 222 194" fill="none" stroke="#1a0830" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- blush -->
+          <circle cx="135" cy="170" r="10" fill="#ff7aa6" opacity=".55"/>
+          <circle cx="265" cy="170" r="10" fill="#ff7aa6" opacity=".55"/>
+
+          <!-- tassel (decorative, sways) -->
+          <g id="tassel" style="transform-origin: 105px 60px;">
+            <path d="M 105 60 Q 95 90 90 115" stroke="#ffd24d" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <rect x="84" y="112" width="14" height="22" rx="3" fill="#ffd24d"/>
+            <line x1="88" y1="132" x2="86" y2="146" stroke="#ffd24d" stroke-width="2"/>
+            <line x1="91" y1="132" x2="91" y2="148" stroke="#ffd24d" stroke-width="2"/>
+            <line x1="94" y1="132" x2="96" y2="146" stroke="#ffd24d" stroke-width="2"/>
+          </g>
+        </g>
+
+        <!-- gold chain necklace -->
+        <g>
+          <path d="M 145 210 Q 200 240 255 210" stroke="#ffd24d" stroke-width="4" fill="none" stroke-dasharray="3 2"/>
+          <circle cx="200" cy="233" r="8" fill="#ffd24d" stroke="#1a0830" stroke-width="1.5"/>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- scroll caption -->
+  <div class="hero-caption">
+    Пролистай вниз — облака ждут<span class="arrow">↓</span>
+  </div>
+
+</section>
+
+<!-- ═══════════════ CLOUDS ═══════════════ -->
+<section class="clouds-section" id="cloudsSection">
+  <div class="section-label">
+    <div class="kicker">Choose your ticket</div>
+    <h2>18 CLOUDS · 18 ANSWERS</h2>
+  </div>
+
+  <div class="birds" id="birdsLayer"></div>
+  <div id="cloudsContainer"></div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<section class="footer">
+  <div class="stars" id="starsLayer"></div>
+  <h3>FLY HIGH. PASS THE EXAM.</h3>
+  <p>Восемнадцать билетов. Статьи, псевдокод, глоссарии, мини-квизы. Всё, что нужно, чтобы поднять оценку до небес.</p>
+  <div class="meta-line">© ALGO ACADEMY · GRADUATION EDITION</div>
+</section>
+
+<!-- ═══════════════ TICKET READER OVERLAY ═══════════════ -->
+<div class="reader" id="reader">
+  <div class="reader-topbar">
+    <div class="r-brand">
+      <span>ALGO</span>
+      <span class="chip" id="rChip">BILET 01</span>
+    </div>
+    <button class="r-close" onclick="closeReader()">← К облакам</button>
+  </div>
+  <div class="cloud-strip" id="cloudStrip"></div>
+  <div class="ticket-wrap" id="ticketWrap"></div>
+</div>
+
+<!-- reusable cloud SVG template — soft painterly blobs with gradient fills -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- soft-edge filter (painterly smudge) -->
+    <filter id="softEdge" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -6"/>
+    </filter>
+    <filter id="softEdge2" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 15 -5"/>
+    </filter>
+
+    <!-- iridescent pink-peach gradient -->
+    <linearGradient id="cloudGradA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#ffd9e0"/>
+      <stop offset="50%"  stop-color="#ff9ab8"/>
+      <stop offset="100%" stop-color="#d46a9e"/>
+    </linearGradient>
+    <linearGradient id="cloudGradB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#ffc9a3"/>
+      <stop offset="50%"  stop-color="#ff8a7a"/>
+      <stop offset="100%" stop-color="#b44a82"/>
+    </linearGradient>
+    <linearGradient id="cloudGradC" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#ffb8d6"/>
+      <stop offset="50%"  stop-color="#d16aa8"/>
+      <stop offset="100%" stop-color="#6e2882"/>
+    </linearGradient>
+    <linearGradient id="cloudGradD" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#ffe0b8"/>
+      <stop offset="50%"  stop-color="#ff9a7a"/>
+      <stop offset="100%" stop-color="#d64a8a"/>
+    </linearGradient>
+
+    <!-- soft fluffy cloud shape (made of overlapping blurred ellipses) -->
+    <symbol id="cloudShapeA" viewBox="0 0 300 180">
+      <g filter="url(#softEdge)">
+        <ellipse cx="80"  cy="110" rx="55" ry="40" fill="url(#cloudGradA)" class="cloud-body"/>
+        <ellipse cx="140" cy="85"  rx="62" ry="48" fill="url(#cloudGradA)" class="cloud-body"/>
+        <ellipse cx="200" cy="95"  rx="55" ry="42" fill="url(#cloudGradA)" class="cloud-body"/>
+        <ellipse cx="230" cy="120" rx="48" ry="38" fill="url(#cloudGradA)" class="cloud-body"/>
+        <ellipse cx="115" cy="125" rx="52" ry="36" fill="url(#cloudGradA)" class="cloud-body"/>
+        <ellipse cx="180" cy="130" rx="50" ry="32" fill="url(#cloudGradA)" class="cloud-body"/>
+      </g>
+    </symbol>
+
+    <symbol id="cloudShapeB" viewBox="0 0 300 180">
+      <g filter="url(#softEdge2)">
+        <ellipse cx="70"  cy="115" rx="50" ry="38" fill="url(#cloudGradB)" class="cloud-body"/>
+        <ellipse cx="130" cy="80"  rx="58" ry="46" fill="url(#cloudGradB)" class="cloud-body"/>
+        <ellipse cx="190" cy="90"  rx="60" ry="44" fill="url(#cloudGradB)" class="cloud-body"/>
+        <ellipse cx="240" cy="125" rx="50" ry="38" fill="url(#cloudGradB)" class="cloud-body"/>
+        <ellipse cx="160" cy="135" rx="60" ry="36" fill="url(#cloudGradB)" class="cloud-body"/>
+      </g>
+    </symbol>
+
+    <symbol id="cloudShapeC" viewBox="0 0 300 180">
+      <g filter="url(#softEdge)">
+        <ellipse cx="85"  cy="105" rx="56" ry="42" fill="url(#cloudGradC)" class="cloud-body"/>
+        <ellipse cx="155" cy="78"  rx="66" ry="50" fill="url(#cloudGradC)" class="cloud-body"/>
+        <ellipse cx="215" cy="100" rx="58" ry="44" fill="url(#cloudGradC)" class="cloud-body"/>
+        <ellipse cx="135" cy="130" rx="55" ry="34" fill="url(#cloudGradC)" class="cloud-body"/>
+        <ellipse cx="200" cy="135" rx="50" ry="32" fill="url(#cloudGradC)" class="cloud-body"/>
+      </g>
+    </symbol>
+
+    <symbol id="cloudShapeD" viewBox="0 0 300 180">
+      <g filter="url(#softEdge2)">
+        <ellipse cx="75"  cy="100" rx="52" ry="40" fill="url(#cloudGradD)" class="cloud-body"/>
+        <ellipse cx="145" cy="82"  rx="62" ry="48" fill="url(#cloudGradD)" class="cloud-body"/>
+        <ellipse cx="210" cy="95"  rx="58" ry="44" fill="url(#cloudGradD)" class="cloud-body"/>
+        <ellipse cx="240" cy="125" rx="46" ry="36" fill="url(#cloudGradD)" class="cloud-body"/>
+        <ellipse cx="120" cy="130" rx="56" ry="34" fill="url(#cloudGradD)" class="cloud-body"/>
+        <ellipse cx="185" cy="135" rx="52" ry="30" fill="url(#cloudGradD)" class="cloud-body"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- horizon silhouette (mountains / campus) -->
+<!--  placed inside hero at runtime -->
+
+<!-- ticket data extracted verbatim from source -->
+<script>
+const T = [
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 01 — Статический и динамический массивы
+═══════════════════════════════════════════════════════ */
+{n:"01",t:"Статический и динамический массивы",q_text:"Статический массив. Динамический массив, среднее время добавления элемента.",s:[
+{h:"Статический массив — описание",b:`<strong>Статический массив</strong> — одна из самых фундаментальных структур данных. Представляет собой последовательный блок памяти, выделенный для хранения <strong>фиксированного количества элементов одного типа</strong>.
+
+<strong>Основные характеристики:</strong>
+— <strong>Фиксированный размер:</strong> определяется во время компиляции (или перед выполнением) и не может быть изменён в процессе работы.
+— <strong>Непрерывное расположение в памяти:</strong> элементы хранятся в последовательных ячейках. Адрес элемента вычисляется как <span class="ha">base + i × sizeof(T)</span> — поэтому доступ за O(1).
+— <strong>Однородность типов:</strong> все элементы одного типа.
+— <strong>Прямой доступ:</strong> O(1) по индексу благодаря известному смещению в памяти.
+
+<strong>Преимущества:</strong>
+— Быстрый доступ O(1) по индексу.
+— Простота реализации.
+— Отличная кэш-локальность: соседние элементы загружаются одной кэш-линией.
+— Предсказуемая производительность — время доступа всегда одинаково.
+— Минимальные накладные расходы по памяти: нет дополнительных метаданных.
+
+<strong>Недостатки:</strong>
+— Невозможность изменения размера: нужно создавать новый массив и копировать элементы.
+— Неэффективное использование памяти: если выделено много, но используется мало — память тратится впустую.
+— Сложность добавления/удаления в середине: требует сдвига O(n) элементов.
+
+<strong>Применение:</strong> буферы данных, матрицы и таблицы, реализация стеков и очередей фиксированного размера, системное и низкоуровневое программирование.`},
+
+{h:"Динамический массив — описание",b:`<strong>Динамический массив</strong> (vector/ArrayList) — структура данных, хранящая элементы одного типа, как статический массив, но с возможностью <strong>изменять размер во время выполнения программы</strong>.
+
+<strong>Основные характеристики:</strong>
+— <strong>Изменяемый размер:</strong> может увеличиваться и уменьшаться в процессе работы.
+— <strong>Непрерывное расположение:</strong> элементы хранятся последовательно. При расширении выделяется новый блок — данные копируются.
+— <strong>Два числа:</strong> <span class="ha">size</span> (количество элементов) и <span class="ha">capacity</span> (вместимость буфера). Обычно capacity > size.
+— <strong>Прямой доступ O(1):</strong> как в статическом массиве.
+
+<strong>Преимущества:</strong> гибкость, удобство, поддержка во всех языках.
+<strong>Недостатки:</strong> накладные расходы на перевыделение; фрагментация памяти при частом выделении/освобождении.`},
+
+{h:"Среднее время добавления — амортизированный анализ",b:`<strong>Стратегия удвоения (×2):</strong> когда буфер переполняется, выделяется новый буфер в 2 раза больше, все элементы копируются.
+
+Кажется, что вставка медленная — при расширении она стоит O(n). Но это происходит <strong>редко</strong>.
+
+<strong>Доказательство амортизированного O(1):</strong>
+Пусть вставляем n элементов. Копирования происходят при размерах: 1, 2, 4, 8, ..., n.
+Суммарная стоимость всех копирований:
+<span class="ha">1 + 2 + 4 + 8 + ... + n = 2n − 1 < 2n</span>
+
+Итого: n вставок стоят суммарно не более 3n операций (n вставок + 2n копирований).
+Среднее на одну вставку: 3n / n = <span class="ha">O(1) амортизированно</span>.
+
+<strong>Важно понимать:</strong> добавление элементов в динамический массив имеет амортизированную сложность O(1), но <strong>в некоторых случаях</strong> (при перевыделении памяти) занимает O(n). Для реал-тайм систем с жёсткими требованиями по времени — используйте связный список (строгое O(1)).`,c:`function append(arr, val):
+  if arr.size == arr.capacity:         # буфер переполнен — нужно расширение
+    new_cap = arr.capacity * 2         # новая ёмкость в 2 раза — ключевое: геом. прогрессия
+    new_data = allocate(new_cap)       # выделяем новый непрерывный блок памяти
+    for i in range(arr.size):
+      new_data[i] = arr.data[i]        # копируем все элементы в новый буфер — O(n)
+    free(arr.data)                     # освобождаем старый буфер памяти
+    arr.data = new_data                # указатель теперь на новый буфер
+    arr.capacity = new_cap             # обновляем значение ёмкости
+
+  arr.data[arr.size] = val             # кладём новый элемент на следующую свободную позицию
+  arr.size += 1                        # увеличиваем счётчик элементов на 1
+
+# Почему умножаем на 2, а не прибавляем 10?
+# +10: расширения через каждые 10 шагов → O(n²) суммарно
+# ×2:  расширения при 1, 2, 4, ... → геом. прогрессия → O(n) суммарно → O(1) на вставку`},
+
+{h:"Сравнение операций",x:{hd:["Операция","Статический","Динамический"],rw:[
+  ["Доступ по индексу [i]","O(1)","O(1)"],
+  ["Добавить в конец","—","O(1) аморт."],
+  ["Добавить в начало/середину","O(n) сдвиг","O(n) сдвиг"],
+  ["Удалить из середины","O(n) сдвиг","O(n) сдвиг"],
+  ["Поиск элемента","O(n)","O(n)"],
+  ["Изменить размер","Невозможно","O(n) при росте"],
+  ["Память","n × sizeof(T)","до 2n × sizeof(T)"]
+]}}
+],g:[
+  ["Capacity","Ёмкость буфера — сколько элементов можно хранить без перевыделения"],
+  ["Size","Текущее количество элементов в массиве"],
+  ["Amortized O(1)","Среднее O(1) по серии из n операций"],
+  ["Contiguous memory","Непрерывный блок — основа кэш-эффективности"],
+  ["Кэш-локальность","Соседние элементы в одной кэш-линии — быстрый перебор"],
+  ["Геом. прогрессия","1+2+4+...+n = 2n-1 — доказательство амортизации"]
+],
+q:[
+  {q:"Время доступа к элементу массива по индексу?",o:["O(n)","O(log n)","O(1)","O(n²)"],c:2,e:"base + i×sizeof(T) — одна арифметическая операция, O(1)."},
+  {q:"Почему среднее время append в динамическом массиве — O(1)?",o:["Массив не заполняется","Дорогие расширения редки: 1+2+4+...+n=2n суммарно / n вставок = O(1)","Операции идут параллельно","Буфер растёт на 1"],c:1,e:"Амортизация: геометрическая прогрессия копирований даёт 2n на n вставок."},
+  {q:"Во сколько раз растёт буфер при переполнении?",o:["×1.5","прибавляем 10","×2","×3"],c:2,e:"Удвоение (×2) гарантирует амортизированный O(1) при добавлении."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 02 — Связные списки
+═══════════════════════════════════════════════════════ */
+{n:"02",t:"Связные списки",q_text:"Односвязный список, двусвязный список. Псевдокод добавления и удаления.",s:[
+{h:"Связный список — общее описание",b:`<strong>Связный список</strong> — динамическая структура данных, состоящая из узлов (nodes). Каждый узел содержит <strong>данные</strong> и <strong>указатель(и)</strong> на следующий/предыдущий элемент.
+
+В отличие от массивов, элементы связного списка <strong>не обязательно хранятся в памяти последовательно</strong> — они могут находиться в произвольных местах кучи (heap).
+
+<strong>Ключевые свойства:</strong>
+— Нет доступа по индексу за O(1): чтобы найти i-й элемент, нужно пройти i шагов от головы — O(n).
+— Вставка/удаление в известной позиции (по указателю) — O(1), без сдвигов.
+— Динамический размер: нет ограничения на количество элементов (кроме памяти).`},
+
+{h:"Односвязный список",b:`<strong>Структура узла:</strong> <span class="ha">data</span> + <span class="ha">next</span> (указатель на следующий узел). Последний узел имеет next = NULL.
+
+Список хранит указатель на <strong>head</strong> (первый узел), опционально — на <strong>tail</strong> (последний).
+
+<strong>Особенности:</strong>
+— Перемещение только в одну сторону: от head к tail.
+— Простая реализация, меньше памяти на указатели (только next).
+— Удаление узла по значению: нужно найти предыдущий — O(n).
+— Удаление узла по прямому указателю: всё равно O(n), т.к. нет prev.`,c:`// ── СТРУКТУРА УЗЛА ──
+struct Node:
+  data: any                   // полезная нагрузка — любой тип данных
+  next: Node | null           // указатель на следующий узел (null = конец списка)
+
+// ── ДОБАВЛЕНИЕ В НАЧАЛО: O(1) ──
+function prepend(list, val):
+  node = new Node()           // создаём новый узел в динамической памяти
+  node.data = val             // записываем данные в узел
+  node.next = list.head       // новый узел указывает на бывший первый
+  list.head = node            // голова списка теперь новый узел
+  if list.tail == null:       // если список был пуст — tail тоже = новый узел
+    list.tail = node
+
+// ── ДОБАВЛЕНИЕ В КОНЕЦ: O(1) при наличии tail ──
+function append(list, val):
+  node = new Node()           // создаём новый узел
+  node.data = val             // записываем данные
+  node.next = null            // он будет последним — next = null
+  if list.tail != null:       // если список не пуст
+    list.tail.next = node     // старый последний указывает на новый
+  else:                       // список был пуст
+    list.head = node          // новый узел становится и головой
+  list.tail = node            // обновляем хвост списка
+
+// ── УДАЛЕНИЕ ПЕРВОГО УЗЛА: O(1) ──
+function remove_first(list):
+  if list.head == null:
+    return null               // список пуст — нечего удалять
+  old_head = list.head        // сохраняем ссылку на удаляемый узел
+  list.head = list.head.next  // голова смещается на следующий узел
+  if list.head == null:       // список стал пустым
+    list.tail = null          // обнуляем tail тоже
+  free(old_head)              // освобождаем память удалённого узла
+  return old_head.data        // возвращаем данные
+
+// ── УДАЛЕНИЕ УЗЛА ПО ЗНАЧЕНИЮ: O(n) ──
+function remove_by_value(list, val):
+  if list.head == null: return          // пустой список
+  if list.head.data == val:             // удаляем голову — отдельный случай
+    list.head = list.head.next
+    if list.head == null: list.tail = null
+    return
+  curr = list.head
+  while curr.next != null:             // ищем предыдущий перед удаляемым
+    if curr.next.data == val:
+      curr.next = curr.next.next       // "перепрыгиваем" удаляемый узел
+      if curr.next == null:            // удалили последний — обновляем tail
+        list.tail = curr
+      return
+    curr = curr.next                   // идём дальше по списку`},
+
+{h:"Двусвязный список",b:`<strong>Структура узла:</strong> <span class="ha">data</span> + <span class="ha">next</span> + <span class="ha">prev</span>. Первый узел имеет prev = NULL, последний — next = NULL.
+
+<strong>Особенности:</strong>
+— Перемещение в обоих направлениях.
+— Удаление по прямому указателю на узел — строгое <span class="ha">O(1)</span>: prev и next известны сразу.
+— Больше памяти: два указателя на узел вместо одного.
+— Эффективная реализация дека (deque): вставка/удаление с обоих концов за O(1).`,c:`// ── СТРУКТУРА УЗЛА ──
+struct Node:
+  data: any                        // данные узла
+  next: Node | null                // указатель на следующий узел
+  prev: Node | null                // указатель на предыдущий узел
+
+// ── ДОБАВЛЕНИЕ В НАЧАЛО: O(1) ──
+function prepend(list, val):
+  node = new Node()
+  node.data = val
+  node.next = list.head            // новый указывает вперёд на бывшую голову
+  node.prev = null                 // новый узел — первый, предыдущего нет
+  if list.head != null:
+    list.head.prev = node          // бывшая голова смотрит назад на новый узел
+  else:
+    list.tail = node               // список был пуст — tail тоже новый
+  list.head = node                 // обновляем голову
+
+// ── УДАЛЕНИЕ УЗЛА ПО УКАЗАТЕЛЮ: O(1) — главное преимущество! ──
+function remove_node(list, node):
+  if node.prev != null:            // у узла есть предыдущий?
+    node.prev.next = node.next     // предыдущий "перепрыгивает" удаляемый
+  else:                            // удаляемый — голова
+    list.head = node.next          // голова смещается
+  if node.next != null:            // у узла есть следующий?
+    node.next.prev = node.prev     // следующий смотрит назад через удаляемый
+  else:                            // удаляемый — хвост
+    list.tail = node.prev          // хвост смещается
+  free(node)                       // освобождаем память
+
+// ИДЕЯ: в двусвязном мы знаем prev и next сразу — перекидываем 2 указателя.
+// В односвязном prev неизвестен → нужен поиск → O(n).`},
+
+{h:"Сравнение",x:{hd:["Операция","Односвязный","Двусвязный"],rw:[
+  ["Добавить в начало","O(1)","O(1)"],
+  ["Добавить в конец (с tail)","O(1)","O(1)"],
+  ["Удалить первый","O(1)","O(1)"],
+  ["Удалить последний","O(n)","O(1)"],
+  ["Удалить по указателю на узел","O(n)","O(1)"],
+  ["Удалить по значению","O(n)","O(n)"],
+  ["Память на узел","data + next","data + next + prev"]
+]}}
+],g:[
+  ["Head","Первый узел списка"],
+  ["Tail","Последний узел списка"],
+  ["Singly linked","Один указатель next — движение только вперёд"],
+  ["Doubly linked","next + prev — движение в обе стороны"],
+  ["O(1) удаление","Двусвязный: знаем prev и next — не нужно искать"],
+  ["Sentinel node","Фиктивный узел-заглушка: упрощает граничные случаи"]
+],
+q:[
+  {q:"Сложность удаления узла двусвязного списка по прямому указателю?",o:["O(n)","O(log n)","O(1)","O(n²)"],c:2,e:"prev и next известны — перекидываем два указателя за O(1)."},
+  {q:"Почему удаление из середины односвязного списка сложнее?",o:["Нет tail","Нет указателя prev — нужен предыдущий, поиск O(n)","Нельзя","Памяти меньше"],c:1,e:"В односвязном нет prev. Поиск предыдущего требует прохода от головы — O(n)."},
+  {q:"Что хранит поле next последнего узла?",o:["Адрес head","null","Адрес prev","Размер списка"],c:1,e:"null — сигнал конца списка."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 03 — АТД Стек
+═══════════════════════════════════════════════════════ */
+{n:"03",t:"АТД Стек",q_text:"АТД Стек. Реализация стека на основе дин. массива, на основе списка.",s:[
+{h:"АТД Стек — описание",b:`<strong>Стек (Stack)</strong> — абстрактный тип данных (АТД), представляющий упорядоченную коллекцию элементов, работающую по принципу <span class="ha">LIFO</span> (Last-In, First-Out): <strong>последним пришёл — первым ушёл</strong>.
+
+Представьте стопку тарелок: добавлять и брать тарелки можно только сверху.
+
+<strong>Основные операции:</strong>
+— <strong>push(x)</strong> — добавить элемент на вершину стека.
+— <strong>pop()</strong> — удалить и вернуть элемент с вершины.
+— <strong>peek() / top()</strong> — посмотреть вершину без удаления.
+— <strong>isEmpty()</strong> — проверить, пуст ли стек.
+— <strong>size()</strong> — количество элементов.
+
+<strong>Применение:</strong>
+— DFS (обход в глубину) — явный стек или стек вызовов рекурсии.
+— Стек вызовов процессора (call stack): каждый вызов функции — push, возврат — pop.
+— История браузера, отмена действий (Ctrl+Z).
+— Проверка корректности скобочных выражений.
+— Конвертация инфиксных выражений в постфиксные (алгоритм сортировочной станции).`},
+
+{h:"Реализация на динамическом массиве",b:`Используем динамический массив. Вершина стека = последний элемент массива.
+
+<strong>Преимущества:</strong>
+— Простота реализации.
+— Эффективный доступ к вершине O(1).
+— Хорошая кэш-локальность — элементы рядом в памяти.
+— Амортизированное O(1) для push (редкие расширения).
+
+<strong>Недостатки:</strong>
+— Изредка push стоит O(n) при расширении буфера.`,c:`class StackArray:
+  def __init__(self):
+    self.data = []             // внутренний динамический массив для хранения элементов
+    self.n = 0                 // счётчик элементов
+
+  def push(self, x):
+    self.data.append(x)        // добавляем в конец массива — O(1) амортизированно
+    self.n += 1                // увеличиваем счётчик
+
+  def pop(self):
+    if self.isEmpty():
+      raise Exception("Стек пуст")  // защита от попытки извлечь из пустого стека
+    self.n -= 1                      // уменьшаем счётчик
+    return self.data.pop()           // удаляем и возвращаем последний элемент — O(1)
+
+  def peek(self):
+    if self.isEmpty():
+      raise Exception("Стек пуст")
+    return self.data[-1]       // последний элемент без удаления — O(1)
+
+  def isEmpty(self):
+    return self.n == 0         // стек пуст, если счётчик равен нулю
+
+  def size(self):
+    return self.n              // возвращаем количество элементов`},
+
+{h:"Реализация на основе связного списка",b:`Используем односвязный список. Вершина стека = голова списка.
+
+<strong>Преимущества:</strong>
+— <strong>Строгое O(1) для push и pop</strong> — никогда нет редких дорогих операций.
+— Не нужно перевыделять память.
+— Для real-time систем предпочтительнее массива.
+
+<strong>Недостатки:</strong>
+— Дополнительная память на указатели.
+— Менее кэш-эффективен, чем массив.`,c:`class StackList:
+  def __init__(self):
+    self.head = None           // голова списка = вершина стека, изначально пуст
+
+  def push(self, x):
+    node = Node(x)             // создаём новый узел в динамической памяти
+    node.next = self.head      // новый узел указывает на текущую вершину
+    self.head = node           // новый узел становится новой вершиной — O(1) строго
+
+  def pop(self):
+    if self.isEmpty():
+      raise Exception("Стек пуст")
+    val = self.head.data       // сохраняем значение вершины
+    old = self.head            // сохраняем ссылку на удаляемый узел
+    self.head = self.head.next // вершина смещается на следующий узел
+    free(old)                  // освобождаем память удалённого узла
+    return val                 // возвращаем сохранённое значение — O(1) строго
+
+  def peek(self):
+    if self.isEmpty():
+      raise Exception("Стек пуст")
+    return self.head.data      // данные вершины без удаления — O(1)
+
+  def isEmpty(self):
+    return self.head is None   // список пуст если голова = None`},
+
+{h:"Сравнение реализаций",x:{hd:["","Массив","Список"],rw:[
+  ["push","O(1) аморт.","O(1) строго"],
+  ["pop","O(1)","O(1) строго"],
+  ["peek","O(1)","O(1)"],
+  ["Пиковая стоимость push","O(n) при расширении","O(1) всегда"],
+  ["Кэш-эффективность","Высокая","Низкая"],
+  ["Доп. память","2× при расширении","+указатель на узел"]
+]}}
+],g:[
+  ["АТД","Абстрактный тип данных — интерфейс без привязки к реализации"],
+  ["LIFO","Last In, First Out — последний вошёл, первый вышел"],
+  ["push","Добавить элемент на вершину стека"],
+  ["pop","Извлечь элемент с вершины стека"],
+  ["peek/top","Посмотреть вершину без удаления"],
+  ["Call stack","Стек вызовов — основа работы рекурсии в процессоре"],
+  ["Stack overflow","Переполнение стека вызовов — бесконечная рекурсия"]
+],
+q:[
+  {q:"Добавили 1, 2, 3 в стек. pop() вернёт?",o:["1","2","3","Ошибку"],c:2,e:"LIFO: последний добавленный (3) выходит первым."},
+  {q:"Главное преимущество стека на связном списке?",o:["Меньше памяти","Кэш-эффективность","Строгое O(1) push — никогда нет редких дорогих операций","Доступ по индексу"],c:2,e:"Список: push всегда строго O(1). Массив: изредка O(n) при удвоении."},
+  {q:"Принцип работы стека?",o:["FIFO","LIFO","Приоритет","Случайный"],c:1,e:"LIFO — Last In, First Out."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 04 — АТД Очередь и Дек
+═══════════════════════════════════════════════════════ */
+{n:"04",t:"АТД Очередь и Дек",q_text:"АТД Очередь и Дек. Реализация на основе списка, оценка времени сложности.",s:[
+{h:"АТД Очередь — описание",b:`<strong>Очередь (Queue)</strong> — АТД, работающий по принципу <span class="ha">FIFO</span> (First-In, First-Out): <strong>первым пришёл — первым ушёл</strong>.
+
+Представьте очередь в магазине: кто первым встал — того первым обслуживают.
+
+<strong>Основные операции:</strong>
+— <strong>enqueue(x)</strong> — добавить в конец очереди (хвост).
+— <strong>dequeue()</strong> — удалить и вернуть из начала очереди (голова).
+— <strong>peek() / front()</strong> — посмотреть первый элемент без удаления.
+— <strong>isEmpty()</strong>, <strong>size()</strong>.
+
+<strong>Применение:</strong>
+— BFS (обход в ширину) — обязательно использует очередь.
+— Буферизация потоков данных: пакеты в сети, задачи в системе.
+— Планировщик задач в ОС — Round Robin.
+— Многопоточность: очередь задач для воркеров (producer-consumer).`},
+
+{h:"Реализация очереди на связном списке",b:`Используем односвязный список с указателями на <strong>head</strong> (начало, откуда берём) и <strong>tail</strong> (конец, куда добавляем).
+
+<strong>Без tail:</strong> enqueue в конец — O(n) — придётся проходить весь список.
+<strong>С tail:</strong> enqueue — O(1). Именно поэтому обязательно храним указатель на хвост.`,c:`class Queue:
+  def __init__(self):
+    self.head = None           // голова — откуда извлекаем (начало очереди)
+    self.tail = None           // хвост — куда добавляем (конец очереди)
+    self.n = 0                 // количество элементов
+
+  def enqueue(self, x):        // добавить в конец очереди — O(1)
+    node = new Node(x)         // создаём новый узел
+    node.next = None           // он будет последним — next = null
+    if self.isEmpty():
+      self.head = node         // очередь была пуста — новый узел и голова, и хвост
+      self.tail = node
+    else:
+      self.tail.next = node    // старый хвост теперь указывает на новый
+      self.tail = node         // обновляем хвост — O(1) благодаря указателю
+
+  def dequeue(self):           // извлечь из начала очереди — O(1)
+    if self.isEmpty():
+      raise Exception("Очередь пуста")
+    val = self.head.data       // сохраняем данные первого элемента
+    old = self.head
+    self.head = self.head.next // голова смещается на следующий
+    if self.head is None:      // очередь стала пустой
+      self.tail = None         // обнуляем и хвост
+    free(old)                  // освобождаем память
+    self.n -= 1
+    return val                 // возвращаем данные
+
+  def peek(self):
+    if self.isEmpty(): raise Exception("Очередь пуста")
+    return self.head.data      // первый элемент без удаления — O(1)`},
+
+{h:"АТД Дек (Double-Ended Queue)",b:`<strong>Дек (Deque)</strong> — двусторонняя очередь. Обобщение очереди: добавление и удаление элементов <strong>с обоих концов</strong>.
+
+<strong>Основные операции:</strong>
+— <strong>push_front(x)</strong>, <strong>push_back(x)</strong> — добавить спереди / сзади.
+— <strong>pop_front()</strong>, <strong>pop_back()</strong> — извлечь спереди / сзади.
+— <strong>front()</strong>, <strong>back()</strong> — посмотреть без удаления.
+
+<strong>Применение:</strong>
+— Алгоритм скользящего минимума/максимума — задача на деке за O(n).
+— Реализация и стека, и очереди одной структурой.
+
+<strong>Лучшая реализация</strong> — двусвязный список: O(1) с обоих концов.`,c:`class Deque:
+  def __init__(self):
+    self.head = None           // голова (начало) дека
+    self.tail = None           // хвост (конец) дека
+    self.n = 0                 // количество элементов
+
+  def push_front(self, x):    // добавить в начало — O(1)
+    node = new Node(x, prev=None, next=self.head)  // prev=null, next=старый head
+    if self.head is not None:
+      self.head.prev = node    // старый head смотрит назад на новый
+    else:
+      self.tail = node         // дек был пуст — новый узел и tail тоже
+    self.head = node           // новый узел становится головой — O(1)
+    self.n += 1
+
+  def push_back(self, x):     // добавить в конец — O(1)
+    node = new Node(x, prev=self.tail, next=None)  // prev=старый tail, next=null
+    if self.tail is not None:
+      self.tail.next = node    // старый tail указывает вперёд на новый
+    else:
+      self.head = node         // дек был пуст — новый узел и head тоже
+    self.tail = node           // новый узел становится хвостом — O(1)
+    self.n += 1
+
+  def pop_front(self):         // извлечь из начала — O(1)
+    if self.isEmpty(): raise Exception("Дек пуст")
+    val = self.head.data
+    self.head = self.head.next // голова смещается на следующий
+    if self.head is not None:
+      self.head.prev = None    // новый head не имеет предыдущего
+    else:
+      self.tail = None         // дек стал пустым
+    self.n -= 1
+    return val
+
+  def pop_back(self):          // извлечь из конца — O(1)
+    if self.isEmpty(): raise Exception("Дек пуст")
+    val = self.tail.data
+    self.tail = self.tail.prev // хвост смещается на предыдущий
+    if self.tail is not None:
+      self.tail.next = None    // новый tail не имеет следующего
+    else:
+      self.head = None         // дек стал пустым
+    self.n -= 1
+    return val`},
+
+{h:"Оценка времени сложности",x:{hd:["Операция","Очередь (список)","Дек (двусв. список)"],rw:[
+  ["enqueue / push_back","O(1)","O(1)"],
+  ["dequeue / pop_front","O(1)","O(1)"],
+  ["push_front","—","O(1)"],
+  ["pop_back","—","O(1)"],
+  ["front() / back()","O(1)","O(1)"],
+  ["isEmpty / size","O(1)","O(1)"],
+  ["Память","O(n)","O(n)"]
+]}}
+],g:[
+  ["FIFO","First In, First Out — первым пришёл, первым ушёл"],
+  ["enqueue","Добавить в конец очереди"],
+  ["dequeue","Извлечь из начала очереди"],
+  ["Deque","Double-Ended Queue — добавление/удаление с обоих концов"],
+  ["BFS","Breadth-First Search — использует очередь"],
+  ["Скользящий min/max","Алгоритм на деке за O(n)"]
+],
+q:[
+  {q:"В очередь добавили 5, 3, 8. dequeue() вернёт?",o:["8","3","5","Зависит от реализации"],c:2,e:"FIFO: первым вошедший (5) — первым выходит."},
+  {q:"Почему для очереди хранят указатель на tail?",o:["Для красоты","Иначе enqueue (вставка в конец) потребует O(n) прохода","Для size()","Ускоряет dequeue"],c:1,e:"Без tail нужно идти от head до конца — O(n). С tail — O(1)."},
+  {q:"Чем дек отличается от очереди?",o:["Принцип LIFO","Добавление и удаление с обоих концов","Нельзя удалять","Работает быстрее"],c:1,e:"Дек — обобщение: операции добавления/удаления с обеих сторон."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 05 — Бинарный поиск
+═══════════════════════════════════════════════════════ */
+{n:"05",t:"Бинарный поиск",q_text:"Бинарный поиск. Задача поиска элемента в отсортированном массиве — постановка задачи, оценка сложности алгоритма. Три вида бинарного поиска.",s:[
+{h:"Постановка задачи и условия применимости",b:`<strong>Задача:</strong> найти позицию (индекс) заданного элемента (ключа) в отсортированном массиве. Если элемент не найден — вернуть -1.
+
+<strong>Формально:</strong>
+— Вход: отсортированный массив arr[0..n-1], ключ key.
+— Выход: индекс элемента, равного key, или -1.
+
+<strong>Условия применимости — обязательны оба:</strong>
+1. <strong>Массив отсортирован</strong> — бинарный поиск не работает на неотсортированных данных.
+2. <strong>Прямой доступ за O(1)</strong> — нужна возможность обратиться к arr[mid] мгновенно. Массивы подходят, связные списки — нет.
+
+<strong>Оценка сложности:</strong>
+На каждом шаге область поиска уменьшается вдвое. Чтобы дойти от n до 1 элемента нужно log₂(n) шагов.
+Время: <span class="ha">O(log n)</span>. Память: <span class="ha">O(1)</span> (итеративная версия).
+
+Сравнение: линейный поиск O(n) на массиве из 10⁹ элементов — 10⁹ шагов. Бинарный — всего 30.`},
+
+{h:"Вид 1 — Классический бинарный поиск",b:`<strong>Цель:</strong> найти индекс любого элемента, равного key. Если таких несколько — любой.`,c:`// ── КЛАССИКА: точное совпадение или -1 ──
+function binary_search(arr, key):
+  lo = 0                       // левая граница поиска — начало массива
+  hi = len(arr) - 1            // правая граница поиска — конец массива
+  while lo <= hi:              // пока есть хотя бы один элемент в диапазоне
+    mid = lo + (hi - lo) // 2  // середина БЕЗОПАСНО: lo+(hi-lo)/2 не переполняет int
+    // Опасно: (lo+hi)//2 — при lo,hi ~2³⁰ сумма переполнит 32-bit int
+    if arr[mid] == key:
+      return mid               // нашли — возвращаем индекс
+    elif arr[mid] < key:
+      lo = mid + 1             // key правее середины — отрезаем левую половину
+    else:
+      hi = mid - 1             // key левее середины — отрезаем правую половину
+  return -1                    // элемент не найден в массиве
+
+// Пример: arr=[2,5,7,8,11,12], key=11
+// Итерация 1: lo=0, hi=5, mid=2, arr[2]=7 < 11 → lo=3
+// Итерация 2: lo=3, hi=5, mid=4, arr[4]=11 == 11 → return 4`},
+
+{h:"Вид 2 — Lower Bound (первое вхождение)",b:`<strong>Цель:</strong> найти индекс <strong>первого</strong> элемента ≥ key (самое левое вхождение key).
+
+Важно, когда в массиве несколько одинаковых элементов и нужен самый левый из них.`,c:`// ── LOWER BOUND: первый индекс, где arr[i] >= key ──
+function lower_bound(arr, key):
+  lo = 0                       // левая граница
+  hi = len(arr)                // ВАЖНО: hi = len, не len-1! Ответ может быть за концом
+  result = -1                  // если key не найден — останется -1
+
+  while lo <= hi - 1:          // пока диапазон не пуст
+    mid = lo + (hi - lo) // 2  // безопасная середина
+    if arr[mid] == key:
+      result = mid             // запоминаем найденный индекс
+      hi = mid - 1             // продолжаем поиск ЛЕВЕЕ — ищем первое вхождение
+    elif arr[mid] < key:
+      lo = mid + 1             // key правее — сдвигаем левую границу
+    else:
+      hi = mid - 1             // key левее — сдвигаем правую границу
+
+  return result                // первое вхождение key или -1
+
+// Пример: arr=[2,5,7,7,7,8,11,12], key=7
+// Найдём 7 в середине, запомним, пойдём влево → result=2 (первый индекс)`},
+
+{h:"Вид 3 — Upper Bound (последнее вхождение)",b:`<strong>Цель:</strong> найти индекс <strong>последнего</strong> элемента, равного key (самое правое вхождение).
+
+Разница с lower_bound — в одной строке: когда нашли key, идём вправо, а не влево.`,c:`// ── UPPER BOUND (последнее вхождение): найти самый правый key ──
+function last_occurrence(arr, key):
+  lo = 0                       // левая граница
+  hi = len(arr) - 1            // правая граница
+  result = -1                  // если key не найден — останется -1
+
+  while lo <= hi:
+    mid = lo + (hi - lo) // 2  // безопасная середина
+    if arr[mid] == key:
+      result = mid             // запоминаем найденный индекс
+      lo = mid + 1             // продолжаем поиск ПРАВЕЕ — ищем последнее вхождение
+    elif arr[mid] < key:
+      lo = mid + 1             // key правее
+    else:
+      hi = mid - 1             // key левее
+
+  return result                // последнее вхождение key или -1
+
+// Пример: arr=[2,5,7,7,7,8,11,12], key=7 → result=4 (последний индекс)
+// Количество вхождений: last_occurrence - first_occurrence + 1 = 4-2+1 = 3`},
+
+{h:"Ключевые отличия трёх видов",x:{hd:["Вид","Когда нашли arr[mid]==key","Возвращает"],rw:[
+  ["Классика","return mid немедленно","Любой индекс key"],
+  ["Lower bound","result=mid, продолжить влево (hi=mid-1)","Первый (левый) индекс"],
+  ["Upper bound","result=mid, продолжить вправо (lo=mid+1)","Последний (правый) индекс"]
+]}}
+],g:[
+  ["O(log n)","Сложность бинарного поиска — делим пополам log₂(n) раз"],
+  ["lo + (hi-lo)//2","Безопасный mid — избегает переполнения int"],
+  ["Lower bound","Первый индекс: arr[i] >= key"],
+  ["Upper bound","Первый индекс: arr[i] > key (стандартная библиотека C++)"],
+  ["Отсортированность","Обязательное условие — без неё бинарный поиск некорректен"]
+],
+q:[
+  {q:"Сложность бинарного поиска?",o:["O(n)","O(n log n)","O(log n)","O(1)"],c:2,e:"Каждый шаг делит область поиска пополам. Итого log₂(n) шагов."},
+  {q:"Lower bound для 5 в [1,3,5,5,7]?",o:["0","2","4","3"],c:1,e:"arr[2]=5 — первый индекс где значение ≥ 5."},
+  {q:"Зачем писать mid = lo + (hi-lo)/2, а не (lo+hi)/2?",o:["Быстрее","Избегает переполнения: lo+hi может переполнить 32-bit int","Даёт другой результат","Стиль кода"],c:1,e:"При lo, hi ≈ 2³⁰ сумма lo+hi переполнит int. lo+(hi-lo)/2 безопасен."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 06 — Двоичная куча
+═══════════════════════════════════════════════════════ */
+{n:"06",t:"Двоичная куча",q_text:"Двоичная куча. Описание, построение, добавление элемента, извлечение минимума.",s:[
+{h:"Описание двоичной кучи",b:`<strong>Двоичная куча (Binary Heap)</strong> — древовидная структура данных, представляющая собой <strong>почти полное двоичное дерево</strong>, удовлетворяющее <strong>свойству кучи</strong>.
+
+<strong>Почти полное двоичное дерево:</strong> все уровни, кроме последнего, полностью заполнены. Последний уровень заполняется <strong>слева направо</strong>.
+
+<strong>Свойство кучи (heap property):</strong>
+— <strong>Min-heap (минимальная куча):</strong> значение каждого узла ≤ значений его потомков. Корень содержит <strong>минимальный</strong> элемент.
+— <strong>Max-heap (максимальная куча):</strong> значение каждого узла ≥ значений потомков. Корень содержит <strong>максимальный</strong> элемент.
+
+<strong>Хранение в массиве (индексация с 0):</strong>
+— Левый потомок узла i: <span class="ha">2i + 1</span>
+— Правый потомок узла i: <span class="ha">2i + 2</span>
+— Родитель узла i: <span class="ha">(i - 1) // 2</span>
+
+<strong>Применение:</strong> приоритетные очереди, алгоритм Дейкстры, Heap Sort, алгоритм Хаффмана.`},
+
+{h:"Просеивание вниз и вверх",c:`// ── SIFT DOWN (просеивание вниз): O(log n) ──
+// Применяется после извлечения корня: восстанавливаем свойство кучи, идя вниз
+function sift_down(arr, n, i):
+  while True:
+    s = i                          // s — индекс наименьшего из i и его детей
+    l = 2*i + 1                    // индекс левого потомка
+    r = 2*i + 2                    // индекс правого потомка
+    if l < n and arr[l] < arr[s]:
+      s = l                        // левый потомок меньше — он кандидат
+    if r < n and arr[r] < arr[s]:
+      s = r                        // правый ещё меньше — он кандидат
+    if s == i:
+      break                        // узел i уже наименьший — свойство восстановлено
+    swap(arr[i], arr[s])           // меняем узел с наименьшим потомком
+    i = s                          // продолжаем просеивание вниз от s
+
+// ── SIFT UP (просеивание вверх): O(log n) ──
+// Применяется после вставки нового элемента: поднимаем его на нужное место
+function sift_up(arr, i):
+  while i > 0:                     // пока не достигли корня
+    p = (i - 1) // 2               // индекс родителя
+    if arr[p] > arr[i]:
+      swap(arr[p], arr[i])         // родитель больше — нарушение, меняем местами
+      i = p                        // продолжаем подъём
+    else:
+      break                        // родитель <= текущего — свойство выполнено`},
+
+{h:"Построение кучи (метод Флойда) — O(n)",b:`<strong>Способ 1:</strong> вставлять элементы по одному → O(n log n).
+<strong>Способ 2 (метод Флойда):</strong> начать с произвольного массива, применить sift_down ко всем внутренним узлам снизу вверх → <span class="ha">O(n)</span>.
+
+<strong>Почему O(n)?</strong> Большинство узлов — листья (≈n/2), им просеиваться 0 уровней. Следующий уровень (≈n/4) — 1 уровень. Сумма: n/2·0 + n/4·1 + n/8·2 + ... = O(n).`,c:`// ── FLOYD BUILD: построение кучи за O(n) ──
+function build_heap(arr):
+  n = len(arr)
+  // Листья (индексы >= n//2) — уже кучи размера 1, пропускаем
+  // Обрабатываем внутренние узлы от последнего к первому (корню)
+  for i from n//2 - 1 downto 0:  // последний внутренний узел = n//2 - 1
+    sift_down(arr, n, i)          // просеиваем каждый внутренний узел вниз`},
+
+{h:"Добавление элемента — O(log n)",b:`1. Добавляем новый элемент в <strong>конец массива</strong> (последний лист дерева).
+2. "Просеиваем вверх" (sift up): сравниваем с родителем. Если элемент меньше родителя — меняем местами.
+3. Повторяем до тех пор, пока элемент ≥ родителя или не достигли корня.`,c:`// ── INSERT: добавить элемент — O(log n) ──
+function insert(heap, val):
+  heap.append(val)               // кладём в конец массива (последний лист дерева)
+  i = len(heap) - 1              // индекс нового элемента
+  while i > 0:                   // пока не дошли до корня
+    p = (i - 1) // 2             // индекс родителя нового элемента
+    if heap[p] > heap[i]:
+      swap(heap[p], heap[i])     // родитель больше нового — нарушение, меняем
+      i = p                      // поднимаемся к родителю (sift up)
+    else:
+      break                      // родитель <= нового — свойство кучи восстановлено`},
+
+{h:"Извлечение минимума — O(log n)",b:`1. Сохраняем значение корня (минимум).
+2. Перемещаем <strong>последний элемент</strong> массива в корень.
+3. Удаляем последний элемент.
+4. "Просеиваем вниз" (sift down): корень меняется с наименьшим потомком пока не восстановится свойство кучи.`,c:`// ── EXTRACT MIN: извлечь минимум — O(log n) ──
+function extract_min(heap):
+  if len(heap) == 0:
+    raise Exception("Куча пуста")
+  min_val = heap[0]              // сохраняем минимум — он всегда в корне (индекс 0)
+  heap[0] = heap[-1]             // перемещаем последний элемент в корень
+  heap.pop()                     // удаляем последний элемент (он уже в корне)
+  sift_down(heap, len(heap), 0)  // восстанавливаем свойство кучи просеиванием вниз
+  return min_val                 // возвращаем сохранённый минимум`},
+
+{h:"Сложности операций",x:{hd:["Операция","O(?)","Комментарий"],rw:[
+  ["insert","O(log n)","sift up — высота дерева"],
+  ["extract_min","O(log n)","sift down — высота дерева"],
+  ["get_min","O(1)","корень всегда минимум"],
+  ["build_heap (Флойд)","O(n)","лучше n вставок O(n log n)"],
+  ["Доп. память","O(1)","in-place в массиве"]
+]}}
+],g:[
+  ["Min-heap","Родитель ≤ потомков — корень минимальный"],
+  ["Sift up","Подъём нового элемента вверх"],
+  ["Sift down","Опускание элемента вниз — восстановление после извлечения"],
+  ["Floyd O(n)","Линейное построение кучи — лучше O(n log n) побочных вставок"],
+  ["Полное б.д.","Все уровни кроме последнего заполнены, последний заполняется слева"]
+],
+q:[
+  {q:"Где находится минимум в min-heap?",o:["Последний элемент","Середина массива","Корень (индекс 0)","Нет гарантии"],c:2,e:"Свойство кучи: родитель ≤ потомков → корень всегда наименьший."},
+  {q:"Сложность построения кучи методом Флойда?",o:["O(n log n)","O(n)","O(log n)","O(n²)"],c:1,e:"Большинство узлов — листья, им просеиваться 0 уровней. Суммарно O(n)."},
+  {q:"Левый потомок узла i (индексация с 0)?",o:["2i","2i+1","i/2","(i-1)/2"],c:1,e:"left=2i+1, right=2i+2, parent=(i-1)//2."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 07 — Квадратичные сортировки и Heapsort
+═══════════════════════════════════════════════════════ */
+{n:"07",t:"Квадратичные сортировки и Heapsort",q_text:"Квадратичные сортировки (пузырьком, вставками, выбором), сортировка с помощью двоичной кучи. Описание алгоритмов, оценка времени работы и дополнительной памяти.",s:[
+{h:"Сортировка пузырьком (Bubble Sort)",b:`<strong>Описание:</strong> многократные проходы по массиву. На каждом проходе сравниваем соседние элементы и меняем местами, если они в неправильном порядке. «Тяжёлые» элементы «всплывают» к концу.
+
+<strong>Оптимизация:</strong> если за проход не было ни одной перестановки — массив уже отсортирован, выходим досрочно → лучший случай O(n).`,c:`// ── ПУЗЫРЬКОМ: O(n²), стабильная ──
+function bubble_sort(arr):
+  n = len(arr)
+  for i in range(n - 1):            // i-й проход «всплывает» i-й по величине элемент
+    swapped = False                  // флаг: была ли хоть одна перестановка на проходе
+    for j in range(n - 1 - i):      // последние i элементов уже на своих местах
+      if arr[j] > arr[j+1]:
+        swap(arr[j], arr[j+1])       // «пузырёк»: больший элемент сдвигается вправо
+        swapped = True               // была перестановка
+    if not swapped:
+      break                          // ни одной замены = уже отсортирован → O(n)
+// Лучший: O(n), средний: O(n²), худший: O(n²). Память O(1). Устойчивая.`},
+
+{h:"Сортировка вставками (Insertion Sort)",b:`<strong>Описание:</strong> рассматриваем элементы по одному. Каждый вставляем на правильное место в уже отсортированной части массива. Как сортировка карт в руке.
+
+<strong>Применение:</strong> эффективна для небольших массивов и почти отсортированных данных. Часто используется как финальный шаг в гибридных сортировках (Timsort, Introsort).`,c:`// ── ВСТАВКАМИ: O(n²), стабильная, O(n) для почти отсортированных ──
+function insertion_sort(arr):
+  n = len(arr)
+  for i in range(1, n):              // считаем arr[0..i-1] уже отсортированным
+    key = arr[i]                     // запоминаем текущий элемент — «берём карту»
+    j = i - 1                        // начинаем сравнивать с предыдущим элементом
+    while j >= 0 and arr[j] > key:
+      arr[j+1] = arr[j]              // сдвигаем больший элемент вправо (без swap!)
+      j -= 1                         // идём ещё левее
+    arr[j+1] = key                   // вставляем key на правильное место
+// Лучший: O(n), средний: O(n²), худший: O(n²). Память O(1). Устойчивая.`},
+
+{h:"Сортировка выбором (Selection Sort)",b:`<strong>Описание:</strong> находим минимальный элемент в неотсортированной части и ставим его на первое место этой части. Повторяем.
+
+<strong>Особенность:</strong> выполняет <strong>минимальное количество обменов</strong> — ровно n-1. Полезно когда swap дорогой. Однако нестабильна.`,c:`// ── ВЫБОРОМ: O(n²) ВСЕГДА, нестабильная ──
+function selection_sort(arr):
+  n = len(arr)
+  for i in range(n - 1):            // позиция, куда кладём текущий минимум
+    min_idx = i                      // предполагаем: arr[i] — минимум в оставшейся части
+    for j in range(i+1, n):
+      if arr[j] < arr[min_idx]:
+        min_idx = j                  // нашли элемент меньше — обновляем позицию минимума
+    swap(arr[i], arr[min_idx])       // ставим минимум на позицию i
+// Лучший: O(n²), средний: O(n²), худший: O(n²). Память O(1). Нестабильная.`},
+
+{h:"Сортировка кучей (Heap Sort) — O(n log n)",b:`<strong>Описание:</strong> использует двоичную кучу. Шаги:
+1. Построить <strong>max-heap</strong> из массива — O(n) методом Флойда.
+2. Повторять n-1 раз: swap корня (максимума) с последним элементом, уменьшить кучу на 1, sift_down.
+
+Каждый шаг 2 ставит текущий максимум на своё финальное место в конце массива.`,c:`// ── HEAP SORT: O(n log n) ВСЕГДА, нестабильная, O(1) доп. память ──
+function heap_sort(arr):
+  n = len(arr)
+  // Шаг 1: Флойд — строим MAX-heap на месте за O(n)
+  for i from n//2 - 1 downto 0:
+    sift_down_max(arr, n, i)         // просеиваем все внутренние узлы max-heap
+
+  // Шаг 2: n-1 раз извлекаем максимум в конец — O(n log n)
+  for i from n-1 downto 1:
+    swap(arr[0], arr[i])             // максимум (корень) уходит на своё место в конец
+    sift_down_max(arr, i, 0)         // восстанавливаем max-heap в уменьшившемся массиве
+// Лучший: O(n log n), средний: O(n log n), худший: O(n log n). Память O(1). Нестабильная.`},
+
+{h:"Сравнение алгоритмов",x:{hd:["Алгоритм","Лучший","Средний","Худший","Память","Устойчивость"],rw:[
+  ["Пузырьком","O(n)","O(n²)","O(n²)","O(1)","Да"],
+  ["Вставками","O(n)","O(n²)","O(n²)","O(1)","Да"],
+  ["Выбором","O(n²)","O(n²)","O(n²)","O(1)","Нет"],
+  ["Кучей","O(n log n)","O(n log n)","O(n log n)","O(1)","Нет"]
+]}}
+],g:[
+  ["Стабильная сортировка","Равные элементы сохраняют исходный относительный порядок"],
+  ["In-place","O(1) дополнительной памяти — сортируется на месте"],
+  ["O(n²)","~n²/2 сравнений для квадратичных алгоритмов"],
+  ["Heap Sort","O(n log n) гарантированно через max-heap"],
+  ["Нестабильная","swap при выборе/куче может нарушить порядок равных элементов"]
+],
+q:[
+  {q:"Какие квадратичные сортировки дают O(n) в лучшем случае?",o:["Только выбором","Пузырьком и вставками","Все три","Только вставками"],c:1,e:"Пузырьком (флаг) и вставками (while j>=0) делают досрочный выход при отсортированных данных."},
+  {q:"Heap Sort в худшем случае?",o:["O(n²)","O(n log n)","O(n)","O(log n)"],c:1,e:"O(n) на build_heap + n × O(log n) на извлечения = O(n log n) всегда."},
+  {q:"Почему сортировка выбором нестабильная?",o:["Медленная","swap min с текущей позицией может нарушить порядок равных","Использует рекурсию","Требует доп. памяти"],c:1,e:"При swap минимума на позицию i можно «перепрыгнуть» через равный элемент."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 08 — Сортировка слиянием
+═══════════════════════════════════════════════════════ */
+{n:"08",t:"Сортировка слиянием",q_text:"Сортировка слиянием. Описание алгоритма, оценка времени работы.",s:[
+{h:"Описание алгоритма",b:`<strong>Сортировка слиянием (Merge Sort)</strong> — эффективный стабильный алгоритм, основанный на принципе <span class="ha">«разделяй и властвуй»</span> (divide and conquer).
+
+<strong>Три шага:</strong>
+1. <strong>Разделение (Divide):</strong> если массив > 1 элемента — делим пополам.
+2. <strong>Рекурсивная сортировка (Conquer):</strong> рекурсивно сортируем каждую половину.
+3. <strong>Слияние (Merge):</strong> сливаем два отсортированных подмассива в один.
+
+<strong>Ключевая идея:</strong> слияние двух отсортированных массивов — линейная операция O(n). На каждом уровне рекурсии суммарно O(n) работы. Уровней log n → итого <span class="ha">O(n log n)</span>.`,c:`// ── MERGE SORT: рекурсивное «разделяй и властвуй» ──
+function merge_sort(arr):
+  if len(arr) <= 1:
+    return arr                   // база рекурсии: 0-1 элемент уже отсортирован
+  mid = len(arr) // 2            // делим пополам — целочисленное деление
+  left = merge_sort(arr[:mid])   // рекурсивно сортируем левую половину
+  right = merge_sort(arr[mid:])  // рекурсивно сортируем правую половину
+  return merge(left, right)      // сливаем два отсортированных массива
+
+// ── MERGE: слияние двух отсортированных массивов — O(n) ──
+function merge(L, R):
+  result = []                    // результирующий массив
+  i = 0                          // указатель на текущую позицию в L
+  j = 0                          // указатель на текущую позицию в R
+  while i < len(L) and j < len(R):
+    if L[i] <= R[j]:             // ВАЖНО: <= обеспечивает СТАБИЛЬНОСТЬ
+      result.append(L[i])        // берём из L: равный элемент из L идёт первым
+      i += 1
+    else:
+      result.append(R[j])        // элемент R меньше — берём его
+      j += 1
+  result.extend(L[i:])           // дописываем остаток L (уже отсортирован)
+  result.extend(R[j:])           // дописываем остаток R (уже отсортирован)
+  return result`},
+
+{h:"Оценка времени и памяти",b:`<strong>Рекуррентность:</strong> T(n) = 2T(n/2) + O(n)
+По мастер-теореме: T(n) = <span class="ha">O(n log n)</span>.
+
+<strong>Интуиция:</strong> log n уровней рекурсии. На каждом уровне суммарно O(n) работы при слиянии.
+
+— Худший случай: <span class="ha">O(n log n)</span>
+— Средний случай: <span class="ha">O(n log n)</span>
+— Лучший случай: <span class="ha">O(n log n)</span> — нет худшего случая, всегда одинаково!
+
+<strong>Дополнительная память: O(n)</strong> — на вспомогательные массивы при слиянии. Это главный недостаток по сравнению с QuickSort и HeapSort.
+
+<strong>Стабильность: да</strong> — условие L[i] <= R[j] гарантирует, что равные элементы из L идут раньше R.
+
+<strong>Применение:</strong> когда нужна гарантированная O(n log n) и стабильность. Внешняя сортировка (данные не помещаются в RAM).`},
+
+{h:"Пример слияния",b:`arr = [38, 27, 43, 3, 9, 82, 10]
+
+Разделение: [38,27,43,3] | [9,82,10]
+→ [38,27] | [43,3] | [9,82] | [10]
+→ [38] [27] [43] [3] [9] [82] [10]
+
+Слияния снизу вверх:
+[27,38] ← merge([38],[27])
+[3,43]  ← merge([43],[3])
+[9,82]  ← merge([9],[82])
+
+[3,27,38,43] ← merge([27,38],[3,43])
+[9,10,82]    ← merge([9,82],[10])
+
+[3,9,10,27,38,43,82] ← merge([3,27,38,43],[9,10,82])`}
+],g:[
+  ["Divide and Conquer","Разделяй и властвуй — рекурсивное разбиение"],
+  ["Merge","Слияние двух отсортированных массивов за O(n)"],
+  ["Мастер-теорема","T(n)=2T(n/2)+O(n) → O(n log n)"],
+  ["O(n) память","Главный недостаток: нужен вспомогательный массив"],
+  ["Стабильная","L[i]<=R[j]: равные из L идут раньше R"],
+  ["External sort","Внешняя сортировка данных больше RAM"]
+],
+q:[
+  {q:"Временная сложность Merge Sort?",o:["O(n²)","O(n)","O(n log n) всегда","O(log n)"],c:2,e:"T(n)=2T(n/2)+O(n) → O(n log n) в любом случае."},
+  {q:"Дополнительная память Merge Sort?",o:["O(1)","O(log n)","O(n)","O(n²)"],c:2,e:"Нужен вспомогательный массив для слияния — O(n)."},
+  {q:"Стабильна ли Merge Sort?",o:["Нет","Да: условие L[i]<=R[j] сохраняет порядок равных","Зависит от реализации","Только для чисел"],c:1,e:"Условие <=: равные элементы из L идут раньше элементов R."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 09 — Быстрая сортировка
+═══════════════════════════════════════════════════════ */
+{n:"09",t:"Быстрая сортировка",q_text:"Быстрая сортировка. Описание алгоритма, оценка времени работы в лучшем, среднем и худшем случае.",s:[
+{h:"Описание алгоритма",b:`<strong>Быстрая сортировка (Quick Sort)</strong> — один из самых популярных алгоритмов, основанный на <span class="ha">«разделяй и властвуй»</span>. <strong>In-place</strong>: не требует дополнительной памяти.
+
+<strong>Три шага:</strong>
+1. <strong>Выбор опорного элемента (pivot):</strong> выбираем один элемент из массива.
+2. <strong>Разделение (Partition):</strong> переставляем элементы так, что все < pivot уходят влево, все > pivot — вправо. Pivot оказывается на своей <strong>финальной отсортированной позиции</strong>.
+3. <strong>Рекурсия:</strong> рекурсивно сортируем подмассивы слева и справа от pivot.`,c:`// ── QUICKSORT: рекурсивное разбиение ──
+function quicksort(arr, lo, hi):
+  if lo < hi:                          // база: 0-1 элемент уже отсортирован
+    p = partition(arr, lo, hi)         // разбиваем, p — финальная позиция pivot
+    quicksort(arr, lo, p - 1)          // рекурсивно сортируем часть < pivot
+    quicksort(arr, p + 1, hi)          // рекурсивно сортируем часть > pivot
+
+// ── LOMUTO PARTITION: pivot = последний элемент ──
+function partition(arr, lo, hi):
+  pivot = arr[hi]                      // выбираем последний элемент как pivot
+  i = lo - 1                           // i — правая граница зоны "< pivot" (пока пустая)
+  for j from lo to hi-1:              // j проходит по всем кроме pivot
+    if arr[j] <= pivot:
+      i += 1                           // расширяем зону "< pivot"
+      swap(arr[i], arr[j])             // перемещаем arr[j] в зону "< pivot"
+  swap(arr[i+1], arr[hi])             // ставим pivot на финальное место
+  return i + 1                         // возвращаем финальный индекс pivot
+
+// После partition: arr[lo..p-1] <= pivot, arr[p] == pivot, arr[p+1..hi] > pivot.`},
+
+{h:"Оценка времени работы",b:`<strong>Лучший случай: O(n log n)</strong>
+Pivot всегда делит массив ровно пополам → log n уровней рекурсии, O(n) на уровень.
+
+<strong>Средний случай: O(n log n)</strong>
+При случайном выборе pivot математически доказывается O(n log n) в среднем.
+
+<strong>Худший случай: O(n²)</strong>
+Pivot всегда оказывается минимумом или максимумом. Например, уже отсортированный массив + pivot = последний элемент.
+Разделение: [0 элементов] + pivot + [n-1 элементов] → рекурсия глубиной n → O(n²).
+
+<strong>Дополнительная память:</strong>
+— Лучший/средний: O(log n) — стек рекурсии при балансированных разбиениях.
+— Худший: O(n) — стек рекурсии при вырожденных разбиениях.`},
+
+{h:"Стратегии выбора pivot и защита",b:`<strong>Последний/первый элемент:</strong> просто, но O(n²) на отсортированных данных.
+<strong>Случайный элемент:</strong> swap случайного с arr[hi], затем Lomuto. Снижает вероятность O(n²).
+<strong>Медиана трёх:</strong> выбрать медиану arr[lo], arr[mid], arr[hi] — хорошая практика.
+<strong>Introsort (std::sort в C++):</strong> QuickSort + когда глубина рекурсии > 2log(n) — переключается на HeapSort. Гарантированно O(n log n) при O(log n) памяти.`,c:`// ── RANDOMIZED QUICKSORT: защита от O(n²) ──
+function randomized_quicksort(arr, lo, hi):
+  if lo < hi:
+    r = random_int(lo, hi)             // случайный индекс в диапазоне [lo, hi]
+    swap(arr[r], arr[hi])              // меняем случайный элемент с последним (pivot)
+    p = partition(arr, lo, hi)         // теперь Lomuto partition работает корректно
+    randomized_quicksort(arr, lo, p-1) // сортируем левую часть
+    randomized_quicksort(arr, p+1, hi) // сортируем правую часть`},
+
+{h:"Три случая — сводная таблица",x:{hd:["Случай","Когда","Время","Память"],rw:[
+  ["Лучший","Pivot всегда делит пополам","O(n log n)","O(log n)"],
+  ["Средний","Случайный pivot","O(n log n) мат.","O(log n)"],
+  ["Худший","Pivot = min/max (отсорт.)","O(n²)","O(n)"]
+]}}
+],g:[
+  ["Pivot","Опорный элемент — разделяет массив на два подмассива"],
+  ["Partition","Разбиение: элементы < pivot влево, > pivot вправо"],
+  ["Lomuto","Схема partition: pivot = последний, один указатель"],
+  ["Hoare","Альтернативная схема: два указателя навстречу"],
+  ["Introsort","Гибрид: QuickSort + HeapSort при глубокой рекурсии = O(n log n)"],
+  ["In-place","O(1) дополнительной памяти для данных (не считая стека)"]
+],
+q:[
+  {q:"Quick Sort деградирует до O(n²) когда?",o:["Pivot всегда min или max (уже отсортированный + last pivot)","Случайный pivot","Много одинаковых","Никогда"],c:0,e:"Разбиение [0 элементов]+[n-1 элементов] → рекурсия глубиной n → O(n²)."},
+  {q:"Дополнительная память в среднем случае?",o:["O(n)","O(1)","O(log n)","O(n log n)"],c:2,e:"Стек рекурсии при балансированных разбиениях — O(log n)."},
+  {q:"Ключевое преимущество QuickSort перед MergeSort?",o:["Лучше в худшем случае","Стабильный","In-place и отличная кэш-локальность","Всегда O(n log n)"],c:2,e:"QuickSort in-place, работает с данными близко в памяти → лучше кэш → быстрее на практике."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 10 — Граф. Хранение в памяти
+═══════════════════════════════════════════════════════ */
+{n:"10",t:"Граф. Хранение в памяти",q_text:"Граф. Хранение графа в памяти: список смежности, матрица смежности (плюсы и минусы). Оценка времени поиска всех соседей, добавление ребра. Оценка расходуемой памяти.",s:[
+{h:"Граф — базовые понятия",b:`<strong>Граф G = (V, E)</strong> — математическая структура, состоящая из множества вершин V (vertices/nodes) и множества рёбер E (edges), где каждое ребро соединяет пару вершин.
+
+<strong>Ключевые понятия:</strong>
+— <strong>Вершина (Vertex/Node)</strong> — основной элемент, представляющий объект.
+— <strong>Ребро (Edge)</strong> — связь между двумя вершинами.
+— <strong>Ориентированный граф (Digraph)</strong> — рёбра имеют направление (дуги u→v).
+— <strong>Неориентированный граф</strong> — рёбра без направления, {u,v}.
+— <strong>Взвешенный граф</strong> — рёбрам присвоены числа (вес: расстояние, стоимость).
+— <strong>Степень вершины deg(v)</strong> — количество рёбер, инцидентных v.
+— <strong>Смежные вершины</strong> — вершины, соединённые ребром.
+
+Графы используются для: социальные сети, транспортные сети, зависимости задач, маршрутизация.`},
+
+{h:"Список смежности",b:`Для каждой вершины хранится список её соседей. Структура: массив списков/множеств, где adj[v] = список вершин, смежных с v.
+
+<strong>Плюсы:</strong>
+— Экономия памяти: <span class="ha">O(V + E)</span> — только реальные рёбра.
+— Быстрый обход соседей: O(deg(v)) — только соседи, не все V.
+— Подходит для разреженных графов (E << V²).
+
+<strong>Минусы:</strong>
+— Проверка наличия ребра (u,v): O(deg(v)) — перебор списка соседей u.
+— Неудобно для взвешенных: нужно хранить вес рядом с соседом.`,c:`// ── СПИСОК СМЕЖНОСТИ: O(V+E) памяти — для разреженных графов ──
+adj = {0: [1, 2], 1: [0, 3], 2: [0], 3: [1]}  // adj[v] = список соседей v
+
+// Добавить ребро u—v (неориентированный):
+adj[u].append(v)                  // добавляем v в список соседей u — O(1)
+adj[v].append(u)                  // добавляем u в список соседей v — O(1)
+// Для ориентированного: только adj[u].append(v)
+
+// Обойти всех соседей v:
+for neighbor in adj[v]: ...       // ровно deg(v) итераций — только соседи!
+
+// Проверить наличие ребра (u,v):
+if v in adj[u]: ...               // O(deg(u)) — перебор списка
+// При хранении в HashSet: O(1) в среднем
+
+// Память: V записей + суммарно 2E ссылок (каждое неориент. ребро дважды) = O(V+E)`},
+
+{h:"Матрица смежности",b:`Квадратная матрица V×V. matrix[u][v] = 1 (или вес) если есть ребро (u,v), иначе 0 (или ∞).
+
+<strong>Плюсы:</strong>
+— Проверка наличия ребра (u,v): <span class="ha">O(1)</span> — одно обращение к матрице.
+— Простая реализация.
+— Удобно для взвешенных графов: matrix[u][v] = вес.
+
+<strong>Минусы:</strong>
+— Память: <span class="ha">O(V²)</span> всегда, независимо от числа рёбер.
+— Обход всех соседей v: O(V) — перебор всей строки.
+— Для разреженных графов огромный расход: тысячи нулей на каждое ребро.`,c:`// ── МАТРИЦА СМЕЖНОСТИ: O(V²) памяти — для плотных графов ──
+matrix = [[0]*V for _ in range(V)]   // матрица V×V нулей
+
+// Добавить ребро u—v (неориентированный):
+matrix[u][v] = 1                     // отмечаем ребро u→v — O(1)
+matrix[v][u] = 1                     // для неориент.: и обратное — O(1)
+// Для взвешенного: matrix[u][v] = weight
+
+// Проверить наличие ребра (u,v):
+if matrix[u][v] != 0: ...            // O(1) — одно обращение!
+
+// Обойти всех соседей v:
+for u in range(V):
+  if matrix[v][u] != 0: ...          // O(V) — перебираем всю строку v
+  // Даже если у v 2 соседа — всё равно V итераций
+
+// Память: V×V ячеек = O(V²) независимо от E
+// Пример: V=1000, E=2000 (разреж.) → матрица: 1M ячеек, список: ~2000`},
+
+{h:"Сравнение",x:{hd:["Операция","Список смежности","Матрица смежности"],rw:[
+  ["Память","O(V+E)","O(V²)"],
+  ["Добавить ребро","O(1)","O(1)"],
+  ["Проверить ребро (u,v)","O(deg(u))","O(1)"],
+  ["Все соседи v","O(deg(v))","O(V)"],
+  ["Разреженный граф (E<<V²)","✓ Эффективен","✗ Расход"],
+  ["Плотный граф (E≈V²)","— Избыточно","✓ Эффективен"]
+]}}
+],g:[
+  ["G=(V,E)","Граф: V вершин и E рёбер"],
+  ["deg(v)","Степень вершины — количество рёбер у вершины v"],
+  ["Разреженный","E << V² — мало рёбер относительно максимума"],
+  ["Плотный","E ≈ V² — почти все возможные рёбра есть"],
+  ["Adjacency list","Список смежности — экономен по памяти"],
+  ["Adjacency matrix","Матрица смежности — O(1) проверка ребра"]
+],
+q:[
+  {q:"Память матрицы смежности для V вершин?",o:["O(E)","O(V+E)","O(V²)","O(V log V)"],c:2,e:"V×V ячеек независимо от количества рёбер E."},
+  {q:"Обход всех соседей v в списке смежности?",o:["O(V)","O(E)","O(deg(v))","O(1)"],c:2,e:"adj[v] содержит ровно deg(v) соседей — столько итераций."},
+  {q:"Матрица смежности лучше когда?",o:["Разреженный граф","Плотный граф (E≈V²) + нужна O(1) проверка ребра","Всегда","Экономия памяти"],c:1,e:"O(1) проверка ребра оправдывает O(V²) памяти при плотных графах."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 11 — Виды графов. Деревья. Связность.
+═══════════════════════════════════════════════════════ */
+{n:"11",t:"Виды графов. Деревья. Связность.",q_text:"Виды графов. Деревья. Связность. Циклы. Полные графы. Ориентированность.",s:[
+{h:"Классификация по ориентированности и весам",b:`<strong>1. По наличию направления рёбер:</strong>
+
+<strong>Неориентированный граф (Undirected Graph):</strong>
+Рёбра не имеют направления. Ребро {u,v} означает: из u в v и из v в u одновременно.
+Пример: дружба в социальной сети (если A дружит с B, то и B с A).
+
+<strong>Ориентированный граф (Directed Graph, Digraph):</strong>
+Рёбра имеют направление — дуги. Дуга u→v означает: из u в v, но не обязательно из v в u.
+Пример: подписка в соцсети (A подписан на B, но B не подписан на A).
+
+<strong>2. По наличию весов:</strong>
+
+<strong>Невзвешенный (Unweighted):</strong> рёбра без чисел — только факт связи.
+<strong>Взвешенный (Weighted):</strong> каждому ребру присвоен вес (расстояние, стоимость, пропускная способность).
+
+Эти категории не взаимоисключающие: граф может быть одновременно взвешенным, ориентированным и циклическим.`},
+
+{h:"Деревья и леса",b:`<strong>Дерево (Tree)</strong> — связный ациклический граф. Ключевые свойства:
+— Ровно <span class="ha">n − 1 рёбер</span> для n вершин.
+— Единственный путь между любой парой вершин.
+— Добавление любого ребра создаёт цикл.
+— Удаление любого ребра разрывает связность.
+
+<strong>Лес (Forest)</strong> — граф без циклов (ациклический). Может быть несвязным. Состоит из нескольких деревьев.
+
+<strong>Корневое дерево (Rooted Tree)</strong> — выделена одна вершина-корень. Остальные вершины делятся на:
+— Родители (parent): вершина ближе к корню.
+— Дети (children): вершины дальше от корня.
+— Листья (leaves): вершины без детей.
+
+<strong>Бинарное дерево (Binary Tree)</strong> — каждая вершина имеет не более 2 потомков.
+<strong>Сбалансированное дерево</strong> — высота поддеревьев отличается не более чем на 1 (AVL-дерево, Красно-чёрное).`},
+
+{h:"Связность, циклы, полные графы",b:`<strong>Связность:</strong>
+— <strong>Связный граф (неориент.):</strong> путь существует между любыми двумя вершинами.
+— <strong>Несвязный граф:</strong> не все вершины достижимы друг из друга. Распадается на <strong>компоненты связности</strong>.
+— <strong>Компонента связности</strong> — максимальный связный подграф.
+— <strong>Сильно связный (ориент.):</strong> из любой вершины достижима любая по направлениям дуг.
+— <strong>Слабо связный (ориент.):</strong> связный при замене всех дуг на рёбра.
+
+<strong>Циклы:</strong>
+— <strong>Цикл</strong> — путь, начинающийся и заканчивающийся в одной вершине.
+— <strong>Ациклический граф</strong> — без циклов.
+— <strong>DAG (Directed Acyclic Graph)</strong> — ориентированный ациклический граф. Основа топологической сортировки.
+
+<strong>Полные графы:</strong>
+— <strong>Полный граф K_n</strong> — каждая пара вершин соединена ребром.
+— Число рёбер: <span class="ha">E = n(n−1)/2</span>. Пример: K₅ = 10 рёбер.`}
+],g:[
+  ["Digraph","Ориентированный граф — рёбра с направлением"],
+  ["DAG","Directed Acyclic Graph — ориент. без циклов"],
+  ["K_n","Полный граф: E=n(n−1)/2 рёбер"],
+  ["Дерево","Связный + ациклический: ровно n−1 рёбер"],
+  ["Лес","Ациклический граф (несколько деревьев)"],
+  ["Компонента связности","Максимальный связный подграф"],
+  ["Сильно связный","Из любой вершины достижима любая по направлениям"],
+  ["Топосорт","Для DAG: u→v ⟹ u раньше v в порядке"]
+],
+q:[
+  {q:"Рёбер в дереве с n вершинами?",o:["n","n+1","n-1","n²/2"],c:2,e:"Связный + ациклический = n-1 ребро. Меньше — несвязный, больше — есть цикл."},
+  {q:"DAG — это?",o:["Двудольный граф","Ориентированный ациклический граф","Полный граф","Граф с отриц. весами"],c:1,e:"Directed Acyclic Graph — основа топологической сортировки задач."},
+  {q:"Рёбер в полном графе K₅?",o:["5","10","20","25"],c:1,e:"K_n: n(n-1)/2. K₅: 5×4/2 = 10."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 12 — Обход в ширину (BFS)
+═══════════════════════════════════════════════════════ */
+{n:"12",t:"Обход в ширину (BFS)",q_text:"Обход графа в ширину. Описание алгоритма, примеры задач, временная сложность.",s:[
+{h:"Описание алгоритма BFS",b:`<strong>BFS (Breadth-First Search)</strong> — обход графа «волнами». Начинает с заданной вершины и систематически исследует <strong>все соседние вершины</strong>, прежде чем перейти к соседям соседей.
+
+<strong>Ключевая структура данных: очередь (FIFO).</strong>
+
+<strong>Инициализация:</strong>
+— Создать очередь queue и множество visited.
+— Добавить начальную вершину в queue и visited.
+
+<strong>Обход:</strong>
+— Пока queue не пуста: извлечь вершину v, обработать, для каждого непосещённого соседа u: добавить в queue и visited.
+
+<strong>Почему именно очередь?</strong> FIFO гарантирует, что вершины ближайшего уровня обрабатываются раньше дальних. LIFO (стек) дал бы DFS.`,c:`function bfs(graph, start):
+  visited = set()                      // множество посещённых вершин
+  dist = {start: 0}                    // dist[v] = расстояние от start до v
+  parent = {start: None}               // parent[v] = от кого пришли в v (для пути)
+  q = Queue()
+  q.enqueue(start)                     // кладём начальную вершину в очередь
+  visited.add(start)                   // помечаем посещённой при добавлении (не при извлечении!)
+
+  while not q.isEmpty():
+    v = q.dequeue()                    // берём из начала очереди — FIFO!
+    for u in graph.neighbors(v):       // перебираем всех соседей v
+      if u not in visited:             // непосещённый сосед
+        visited.add(u)                 // помечаем посещённым сразу при добавлении
+        dist[u] = dist[v] + 1         // расстояние = dist[v] + 1 ребро
+        parent[u] = v                  // запоминаем откуда пришли в u
+        q.enqueue(u)                   // добавляем в очередь для обработки
+  return dist, parent
+
+// ИДЕЯ: BFS обходит «волнами». Сначала все соседи start (расстояние 1),
+// затем их соседи (расстояние 2) и т.д.
+// Первое достижение вершины = кратчайший путь (по числу рёбер).`},
+
+{h:"Восстановление пути",c:`// ── ВОССТАНОВИТЬ КРАТЧАЙШИЙ ПУТЬ от start до target ──
+function get_path(parent, start, target):
+  path = []
+  v = target
+  while v is not None:              // идём от target к start по parent[]
+    path.append(v)                  // добавляем вершину в путь
+    v = parent[v]                   // поднимаемся к родителю
+  path.reverse()                    // путь был в обратном порядке — разворачиваем
+  return path                       // возвращаем путь от start до target`},
+
+{h:"Применение и сложность",b:`<strong>Применение BFS:</strong>
+— <strong>Кратчайший путь в невзвешенном графе:</strong> BFS гарантированно находит путь с наименьшим числом рёбер.
+— <strong>Определение связности:</strong> если BFS из любой вершины посетит все — граф связный.
+— <strong>Поиск компонент связности.</strong>
+— <strong>Проверка двудольности:</strong> граф двудолен ↔ нет нечётных циклов (можно покрасить в 2 цвета).
+— <strong>Задача о лабиринте:</strong> клетки = вершины, ходы = рёбра — BFS находит кратчайший выход.
+— <strong>Социальные сети:</strong> нахождение людей на расстоянии k рукопожатий.
+
+<strong>Временная сложность: O(V + E)</strong>
+— Каждая вершина добавляется в очередь и обрабатывается ровно 1 раз → O(V).
+— Каждое ребро просматривается ровно 1 раз → O(E).
+— Операции с очередью (enqueue/dequeue): O(1).
+
+<strong>Пространственная сложность: O(V)</strong> — для очереди и массива dist/parent.`}
+],g:[
+  ["BFS","Breadth-First Search — обход в ширину, волнами"],
+  ["FIFO","First In, First Out — очередь: ближние вершины обрабатываются первыми"],
+  ["dist[]","Расстояние (в рёбрах) от источника до каждой вершины"],
+  ["parent[]","Для восстановления пути — от кого пришли"],
+  ["O(V+E)","Линейно по числу вершин и рёбер"],
+  ["Двудольность","Граф двудолен ↔ 2-раскрашиваем (нет нечётных циклов)"]
+],
+q:[
+  {q:"Какая структура данных лежит в основе BFS?",o:["Стек","Очередь (FIFO)","Хэш-таблица","Куча"],c:1,e:"Queue (FIFO) — обход ближних вершин раньше дальних."},
+  {q:"BFS гарантирует в невзвешенном графе?",o:["Обход всех вершин","Мин. по весу рёбер","Мин. по числу рёбер","Лексикографический порядок"],c:2,e:"Первое достижение вершины = кратчайший путь по числу рёбер."},
+  {q:"Сложность BFS?",o:["O(V²)","O(V+E)","O(E log V)","O(V log V)"],c:1,e:"Каждая вершина и каждое ребро обрабатываются ровно по одному разу."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 13 — Обход в глубину (DFS)
+═══════════════════════════════════════════════════════ */
+{n:"13",t:"Обход в глубину (DFS)",q_text:"Обход графа в глубину. Описание алгоритма, примеры задач, временная сложность. Свойство дерева обхода.",s:[
+{h:"Описание алгоритма DFS",b:`<strong>DFS (Depth-First Search)</strong> — обход графа «вглубь». Идёт как можно дальше по каждой ветке, прежде чем вернуться назад.
+
+<strong>Ключевая структура данных: стек</strong> (явный или неявный — через рекурсию).
+
+<strong>Цвета вершин:</strong>
+— <span class="ha">WHITE</span> — не посещена.
+— <span class="ha">GRAY</span> — в текущем стеке рекурсии (посещена, но потомки не обработаны).
+— <span class="ha">BLACK</span> — полностью обработана (все потомки).
+
+DFS присваивает каждой вершине два временны́х метки: <strong>enter[v]</strong> (время первого посещения) и <strong>exit[v]</strong> (время завершения обработки).`,c:`// ── РЕКУРСИВНЫЙ DFS с временными метками ──
+function dfs(graph, v, visited, enter, exit, timer):
+  visited.add(v)                       // помечаем посещённой (WHITE → GRAY)
+  timer[0] += 1                        // таймер растёт при каждом событии
+  enter[v] = timer[0]                  // время входа — первое посещение v
+
+  for u in graph.neighbors(v):
+    if u not in visited:               // непосещённый сосед — уходим глубже
+      dfs(graph, u, visited, enter, exit, timer)  // рекурсивный вызов
+
+  timer[0] += 1                        // таймер растёт при завершении
+  exit[v] = timer[0]                   // время выхода — все потомки v обработаны (GRAY→BLACK)
+
+function dfs_all(graph):
+  visited = set()
+  enter = {}; exit = {}; timer = [0]
+  for v in graph.vertices():
+    if v not in visited:               // для несвязных: запускаем от каждой непосещённой
+      dfs(graph, v, visited, enter, exit, timer)`},
+
+{h:"Свойство дерева обхода и типы рёбер",b:`<strong>DFS-дерево</strong> — дерево из рёбер, по которым DFS впервые достигал вершин. Для связного графа — <strong>остовное дерево</strong>.
+
+<strong>Ключевое свойство меток времени:</strong>
+Для любых вершин u и v выполняется одно из:
+— enter[v] < enter[u] < exit[u] < exit[v] → u <strong>потомок</strong> v в DFS-дереве.
+— enter[u] < enter[v] < exit[v] < exit[u] → v потомок u.
+— Отрезки не пересекаются → u и v в <strong>разных ветках</strong>.
+
+<strong>Типы рёбер в DFS (ориентированный граф):</strong>
+— <strong>Tree edge</strong> — ребро DFS-дерева (к белой вершине).
+— <strong>Back edge</strong> — к GRAY предку → <strong>признак цикла!</strong>
+— <strong>Forward edge</strong> — к BLACK потомку (не дочернему).
+— <strong>Cross edge</strong> — к BLACK вершине в другой ветке.
+
+В неориентированном графе: только tree и back edges.
+
+<strong>Топологическая сортировка DAG:</strong> убывание exit_time даёт корректный топологический порядок.`},
+
+{h:"Применение и сложность",b:`<strong>Применение DFS:</strong>
+— Поиск всех вершин/рёбер графа.
+— Обнаружение циклов (back edge → цикл).
+— Топологическая сортировка DAG (убывание exit).
+— Поиск компонент связности.
+— Поиск мостов и точек сочленения (алгоритм Тарьяна).
+— Поиск сильно связных компонент (алгоритм Косарайю / Тарьяна).
+— Задачи с лабиринтами (не гарантирует кратчайший путь).
+
+<strong>Временная сложность: O(V + E)</strong>
+— Каждая вершина посещается ровно 1 раз → O(V).
+— Каждое ребро просматривается ровно 1 раз → O(E).
+
+<strong>Пространственная сложность: O(V)</strong> — глубина стека рекурсии до V.`}
+],g:[
+  ["DFS","Depth-First Search — обход в глубину"],
+  ["WHITE/GRAY/BLACK","Не посещён / В стеке / Завершён"],
+  ["Back edge","Ребро к GRAY предку → признак цикла (в ориент.)"],
+  ["enter[v]","Время первого посещения v"],
+  ["exit[v]","Время завершения: все потомки v обработаны"],
+  ["Топосорт","Убывание exit_time = корректный порядок для DAG"],
+  ["O(V+E)","Линейно — каждая вершина и ребро обрабатываются раз"]
+],
+q:[
+  {q:"Back edge в DFS — это?",o:["К непосещённой вершине","К GRAY предку в текущем стеке","Обратное направление","К вершине меньшего индекса"],c:1,e:"Back edge (u→v): v GRAY — предок u в стеке рекурсии. Признак цикла."},
+  {q:"Сложность DFS?",o:["O(V²)","O(V+E)","O(E log E)","O(V log V)"],c:1,e:"Каждая вершина и каждое ребро — ровно по одному разу."},
+  {q:"Топологическая сортировка через DFS?",o:["По возрастанию enter","По убыванию exit","Лексикографически","Невозможно через DFS"],c:1,e:"Убывание exit_time = корректный топологический порядок DAG."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 14 — Поиск цикла через DFS
+═══════════════════════════════════════════════════════ */
+{n:"14",t:"Поиск цикла через DFS",q_text:"Поиск цикла в графе (ориентированном и неориентированном) при помощи обхода в глубину. Описание алгоритма, оценка по времени и памяти.",s:[
+{h:"Цикл в неориентированном графе",b:`<strong>Признак цикла:</strong> в DFS встречаем посещённую вершину, которая <strong>не является родителем</strong> текущей (back edge к не-parent).
+
+<strong>Почему проверяем u != parent?</strong> В неориентированном графе ребро {u,v} видно с обоих концов. Когда обрабатываем v и видим соседа u = parent — это то же самое ребро откуда пришли. Не цикл! Но если видим другую посещённую вершину — настоящий цикл.`,c:`// ── НЕОРИЕНТИРОВАННЫЙ: цикл = back edge к не-родителю ──
+function has_cycle_undirected(graph):
+  visited = set()
+
+  def dfs(v, parent):                  // parent — откуда пришли в v
+    visited.add(v)                     // помечаем вершину посещённой
+    for u in graph.neighbors(v):
+      if u not in visited:
+        if dfs(u, v): return True      // рекурсивный DFS, v — родитель u
+      elif u != parent:                // посещённый сосед, но НЕ наш родитель
+        return True                    // back edge к не-parent = цикл!
+    return False
+
+  // Проверяем все компоненты (граф может быть несвязным)
+  return any(dfs(v, None) for v in graph.vertices() if v not in visited)`},
+
+{h:"Цикл в ориентированном графе",b:`<strong>Признак цикла:</strong> back edge к <strong>GRAY</strong> вершине — вершине в текущем стеке рекурсии (на текущем пути обхода).
+
+<strong>Три цвета:</strong>
+— <span class="ha">WHITE</span> (0): не посещена.
+— <span class="ha">GRAY</span> (1): в текущем стеке рекурсии.
+— <span class="ha">BLACK</span> (2): полностью обработана.
+
+<strong>Почему BLACK не цикл?</strong> BLACK вершина уже полностью обработана — она не является предком в текущем пути. Ребро к ней — cross/forward, не back.`,c:`// ── ОРИЕНТИРОВАННЫЙ: 3 цвета (WHITE, GRAY, BLACK) ──
+WHITE, GRAY, BLACK = 0, 1, 2           // три состояния вершин
+
+function has_cycle_directed(graph):
+  color = {v: WHITE for v in graph.vertices()}  // все белые изначально
+
+  def dfs(v):
+    color[v] = GRAY                    // вершина в текущем стеке рекурсии
+    for u in graph.neighbors(v):
+      if color[u] == GRAY:
+        return True                    // ребро к GRAY = к предку на текущем пути = цикл!
+      if color[u] == WHITE:
+        if dfs(u): return True         // непосещённая — уходим глубже
+      // color[u] == BLACK: уже обработана — не цикл (cross/forward edge)
+    color[v] = BLACK                   // полностью обработали вершину v
+    return False
+
+  return any(dfs(v) for v in graph.vertices() if color[v] == WHITE)`},
+
+{h:"Оценка и ключевые отличия",x:{hd:["Параметр","Неориентированный","Ориентированный"],rw:[
+  ["Признак цикла","Back edge к не-parent","Back edge к GRAY вершине"],
+  ["Доп. структура","parent(v)","color[v] = WHITE/GRAY/BLACK"],
+  ["Время","O(V+E)","O(V+E)"],
+  ["Память","O(V)","O(V)"]
+]}}
+],g:[
+  ["WHITE","Вершина не посещена — DFS ещё не заходил"],
+  ["GRAY","Вершина в текущем стеке рекурсии — обрабатывается"],
+  ["BLACK","Вершина полностью обработана — не предок на текущем пути"],
+  ["Back edge (ориент.)","Ребро к GRAY предку → цикл"],
+  ["u != parent","Игнорируем обратное ребро в неориент. — не цикл"]
+],
+q:[
+  {q:"Зачем 'u != parent' в неориентированном графе?",o:["Не посещать вершины дважды","Ребро к родителю — то же ребро в обратном направлении, не цикл","Оптимизация","Для несвязных графов"],c:1,e:"В неориент. ребро {u,v} видно с обоих концов. Родитель — не цикл, просто обратный проход по тому же ребру."},
+  {q:"Ребро u→v, v BLACK. Это цикл?",o:["Да","Нет — BLACK не в стеке, это cross/forward ребро","Зависит от графа","Нужна доп. проверка"],c:1,e:"Цикл = ребро к GRAY. BLACK завершён и не является предком в текущем пути."},
+  {q:"Сложность обнаружения цикла через DFS?",o:["O(V²)","O(V+E)","O(E log V)","O(V)"],c:1,e:"Стандартный DFS: каждая вершина и ребро — ровно раз."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 15 — Поиск мостов
+═══════════════════════════════════════════════════════ */
+{n:"15",t:"Поиск мостов",q_text:"Поиск мостов в графе. Определение моста. Алгоритм нахождения мостов.",s:[
+{h:"Определение моста",b:`<strong>Мост (bridge)</strong> — ребро графа, удаление которого увеличивает количество компонент связности.
+
+Иными словами, это ребро, через которое проходит <strong>единственный путь</strong> между двумя частями графа. Если убрать мост — части разорвутся.
+
+<strong>Примеры применения:</strong>
+— Поиск уязвимостей в компьютерных сетях: мост = единственная связь между подсетями, отказ которой изолирует часть сети.
+— Анализ надёжности инфраструктуры.
+— Разделение графа на части.
+
+<strong>Алгоритм Тарьяна (1972)</strong> — находит все мосты за один DFS, O(V+E).
+
+<strong>Ключевые массивы:</strong>
+— <span class="ha">disc[v]</span> — время первого посещения v (DFS-таймер, называют также entry_time или tin).
+— <span class="ha">low[v]</span> — минимальное disc, достижимое из поддерева v через <strong>один</strong> back edge.
+
+<strong>Условие моста:</strong> ребро (u, v) является мостом тогда и только тогда, когда <span class="ha">low[v] > disc[u]</span>.
+Это значит: из поддерева v нет пути обратно выше u → единственный путь к v идёт через ребро (u,v).`},
+
+{h:"Алгоритм Тарьяна — поиск мостов",c:`function find_bridges(graph):
+  disc = {}                              // disc[v] = время первого посещения v
+  low = {}                               // low[v] = мин. disc из поддерева v (через back edge)
+  visited = set()                        // множество посещённых вершин
+  bridges = []                           // список найденных мостов
+  t = [0]                                // глобальный таймер (список для изменения в рекурсии)
+
+  def dfs(v, par):                       // par — родительская вершина в DFS-дереве
+    visited.add(v)                       // помечаем вершину посещённой
+    t[0] += 1
+    disc[v] = low[v] = t[0]            // изначально low[v] = disc[v] — нет back edge
+
+    for u in graph.neighbors(v):
+      if u == par: continue             // пропускаем ребро назад к родителю (неориент.)
+      if u not in visited:
+        dfs(u, v)                       // рекурсивный обход — u ещё не посещена
+        low[v] = min(low[v], low[u])   // обновляем low[v] через поддерево u
+        if low[u] > disc[v]:           // ← УСЛОВИЕ МОСТА: строгое >
+          bridges.append((v, u))        // из поддерева u нельзя "обойти" v → мост!
+      else:
+        // u уже посещена и не родитель → back edge
+        low[v] = min(low[v], disc[u])  // обновляем low через эту back edge
+
+  for v in graph.vertices():
+    if v not in visited:
+      dfs(v, -1)                        // -1 = нет родителя для корня DFS-дерева
+
+  return bridges
+
+// ИДЕЯ: low[u] > disc[v] означает: поддерево u "не видит" ничего выше v.
+// Если убрать ребро (v,u), поддерево u отсоединится → это мост.`},
+
+{h:"Сложность",x:{hd:["Параметр","Значение","Комментарий"],rw:[
+  ["Время","O(V+E)","Один DFS — каждая вершина и ребро раз"],
+  ["Доп. память","O(V)","Массивы disc, low, visited + стек рекурсии O(V)"]
+]}}
+],g:[
+  ["Мост","Ребро → удаление увеличивает компоненты связности"],
+  ["disc[v]","DFS discovery time — порядковый номер первого посещения"],
+  ["low[v]","Мин. disc из поддерева v через один back edge"],
+  ["low[u]>disc[v]","Условие моста — строгое неравенство"],
+  ["Тарьян","Алгоритм O(V+E) для поиска мостов и точек сочленения"]
+],
+q:[
+  {q:"Ребро (u,v) является мостом когда?",o:["low[v] >= disc[u]","low[v] > disc[u]","disc[v] > disc[u]","low[u] < disc[v]"],c:1,e:"Строгое >: из поддерева v нет пути выше u → ребро единственное → мост."},
+  {q:"Что означает low[v]?",o:["Глубину вершины в DFS","Мин. disc, достижимый из поддерева v через back edge","Вес ребра","Количество соседей"],c:1,e:"Минимальный disc, достижимый из поддерева v через ноль или более tree edges и один back edge."},
+  {q:"Сложность алгоритма нахождения мостов?",o:["O(V²)","O(E log V)","O(V+E)","O(V·E)"],c:2,e:"Один DFS обходит все вершины и рёбра ровно по разу."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 16 — Точки сочленения
+═══════════════════════════════════════════════════════ */
+{n:"16",t:"Точки сочленения (AP)",q_text:"Поиск точек сочленения в графе. Определение точки сочленения. Алгоритм нахождения точек сочленения.",s:[
+{h:"Определение точки сочленения",b:`<strong>Точка сочленения (Articulation Point, AP)</strong> — вершина неориентированного графа, удаление которой (вместе со всеми инцидентными рёбрами) увеличивает количество компонент связности.
+
+<strong>Два случая — вершина v является AP:</strong>
+
+<strong>Случай 1: v — корень DFS-дерева</strong> с более чем одним дочерним поддеревом.
+Удаление корня разъединит эти поддеревья между собой.
+
+<strong>Случай 2: v — не корень</strong>, и для некоторого ребёнка u выполняется:
+<span class="ha">low[u] >= disc[v]</span>
+Это означает: поддерево u не может "обойти" v через back edge, поднявшись выше v. Удаление v отрежет u и все его потомки.
+
+<strong>Ключевое отличие от мостов:</strong>
+— Мост: <span class="ha">low[v] > disc[u]</span> — строгое неравенство.
+— AP: <span class="ha">low[u] >= disc[v]</span> — нестрогое неравенство.
+
+При равенстве low[u] == disc[v]: поддерево u достигает v, но не поднимается выше. Удаление v всё равно отрезает u от предков v. Поэтому AP, но ребро (v,u) — не мост.`},
+
+{h:"Алгоритм Тарьяна — поиск точек сочленения",c:`function find_ap(graph):
+  disc = {}                              // disc[v] = время первого посещения v
+  low = {}                               // low[v] = мин. disc из поддерева v
+  visited = set()
+  is_ap = set()                          // множество найденных точек сочленения
+  t = [0]                                // глобальный таймер
+
+  def dfs(v, par):
+    visited.add(v)
+    t[0] += 1
+    disc[v] = low[v] = t[0]            // время входа = начальное значение low
+    ch = 0                              // счётчик дочерних поддеревьев в DFS-дереве
+
+    for u in graph.neighbors(v):
+      if u == par: continue             // игнорируем обратное ребро к родителю
+      if u not in visited:
+        ch += 1                         // u — ещё одно дочернее поддерево v
+        dfs(u, v)
+        low[v] = min(low[v], low[u])   // поднимаем low[v] через поддерево u
+        // УСЛОВИЕ AP (не корень): нестрогое >=
+        if par != -1 and low[u] >= disc[v]:
+          is_ap.add(v)                  // поддерево u не может обойти v → v это AP
+      else:
+        // back edge: обновляем low через обратное ребро
+        low[v] = min(low[v], disc[u])
+
+    // УСЛОВИЕ AP (корень): >1 дочернего поддерева
+    if par == -1 and ch > 1:
+      is_ap.add(v)
+
+  for v in graph.vertices():
+    if v not in visited: dfs(v, -1)
+
+  return is_ap`},
+
+{h:"Мост vs AP — сравнение условий",x:{hd:["","Мост","Точка сочленения"],rw:[
+  ["Объект","Ребро (u,v)","Вершина v"],
+  ["Условие (не корень)","low[v] > disc[u] (строгое)","low[u] >= disc[v] (нестрогое)"],
+  ["Корень DFS","—","AP если >1 дочернего поддерева"],
+  ["Время","O(V+E)","O(V+E)"],
+  ["Память","O(V)","O(V)"]
+]}}
+],g:[
+  ["AP","Articulation Point — точка сочленения"],
+  ["low[u]>=disc[v]","AP: нестрогое (vs мост: строгое)"],
+  ["Корень DFS c >1 детьми","Всегда точка сочленения"],
+  ["Двусвязный граф","Граф без AP: удаление любой вершины не разрывает"]
+],
+q:[
+  {q:"AP отличается от условия моста тем, что?",o:["Строже: требует dist>","Нестрогое >=: при low==disc удаление v отрезает u","Одинаковые условия","AP только для корней"],c:1,e:">=: low[u]==disc[v] → u добирается до v, но не выше → удаление v отрезает u от предков → AP."},
+  {q:"Корень DFS-дерева является точкой сочленения когда?",o:["Всегда","Никогда","Если >1 дочернего поддерева","low==disc"],c:2,e:"Обычное условие неприменимо к корню. >1 детей → удаление корня разделит их."},
+  {q:"Сложность алгоритма нахождения точек сочленения?",o:["O(V·E)","O(V²)","O(V+E)","O(E log V)"],c:2,e:"Один DFS — O(V+E)."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 17 — Алгоритм Дейкстры
+═══════════════════════════════════════════════════════ */
+{n:"17",t:"Алгоритм Дейкстры",q_text:"Алгоритм Дейкстры. Постановка задачи, описание алгоритма за O(V² + E). Улучшение алгоритма для разреженных графов за O(E log V).",s:[
+{h:"Постановка задачи",b:`<strong>Задача:</strong> найти кратчайшие пути от одной заданной вершины-источника s до <strong>всех остальных вершин</strong> во взвешенном графе с <strong>неотрицательными весами рёбер</strong>.
+
+<strong>Формально:</strong>
+— Вход: граф G=(V,E) с весами w(u,v) ≥ 0, вершина s.
+— Выход: массив dist[], где dist[v] = длина кратчайшего пути от s до v.
+
+<strong>⚠ Ограничение: не работает с отрицательными весами!</strong>
+Алгоритм «финализирует» вершины: раз обработанная вершина считается закрытой с оптимальным расстоянием. Если позже найдётся отрицательное ребро — алгоритм его уже не учтёт. Для отрицательных весов — алгоритм Беллмана-Форда.
+
+<strong>Жадная идея:</strong> на каждом шаге выбираем непосещённую вершину с <strong>минимальным известным расстоянием</strong> и «финализируем» её. Затем расслабляем (relax) все исходящие рёбра.
+
+<strong>Корректность</strong> следует из неотрицательности весов: нельзя улучшить путь к уже финализированной вершине через другие вершины (ведь мы выбрали минимальную, и все добавляемые веса ≥ 0).`},
+
+{h:"Алгоритм за O(V² + E) — для плотных графов",c:`// ── НАИВНАЯ РЕАЛИЗАЦИЯ: O(V² + E) ──
+function dijkstra_naive(graph, s):
+  dist = {v: ∞ for v in V}              // шаг 1: все расстояния = бесконечность
+  dist[s] = 0                            // до источника s = 0
+  visited = set()                        // множество финализированных вершин
+
+  for _ in range(len(V)):               // V итераций: финализируем по одной вершине
+    // Шаг 2.1: найти вершину с мин. dist среди не финализированных — O(V)
+    v = None
+    for u in V:
+      if u not in visited:
+        if v is None or dist[u] < dist[v]:
+          v = u                          // находим u с минимальным dist[u]
+    if dist[v] == ∞: break              // оставшиеся вершины недостижимы из s
+
+    visited.add(v)                       // финализируем v — её расстояние оптимально!
+
+    // Шаг 2.2: релаксация рёбер из v
+    for (u, w) in graph.neighbors(v):   // перебираем соседей v
+      if dist[v] + w < dist[u]:         // нашли более короткий путь до u через v?
+        dist[u] = dist[v] + w           // релаксация: обновляем лучшее расстояние
+
+  return dist
+
+// ОЦЕНКА O(V² + E):
+// - V итераций × O(V) поиск минимума = O(V²)
+// - Суммарно E релаксаций = O(E)
+// - Итого: O(V² + E) ≈ O(V²) для плотных графов (E ≈ V²)`},
+
+{h:"Улучшение до O(E log V) — для разреженных графов",b:`<strong>Идея:</strong> заменить линейный поиск минимума (O(V)) на <strong>min-кучу</strong> (O(log V)).
+
+<strong>Трюк с устаревшими записями:</strong> вместо "уменьшить ключ" в куче — просто добавляем новую запись (dist, v). Старая (с большим dist) остаётся в куче — отфильтровываем проверкой.`,c:`// ── С MIN-HEAP: O(E log V) ──
+function dijkstra_heap(graph, s):
+  dist = {v: ∞ for v in V}              // все расстояния = бесконечность
+  dist[s] = 0
+  pq = MinHeap()                         // min-куча: хранит пары (dist[v], v)
+  pq.insert((0, s))                      // добавляем источник
+
+  while not pq.isEmpty():
+    d, v = pq.extract_min()              // извлекаем вершину с мин. dist — O(log E)
+    if d > dist[v]: continue            // ВАЖНО: устаревшая запись в куче — пропускаем!
+    // Объяснение: при релаксации добавляем новую (лучшую) запись в кучу.
+    // Старая (худшая) остаётся — когда дойдём до неё, dist[v] уже улучшен → d > dist[v].
+
+    for (u, w) in graph.neighbors(v):   // перебираем соседей финализированной v
+      if dist[v] + w < dist[u]:         // нашли более короткий путь до u?
+        dist[u] = dist[v] + w           // релаксация
+        pq.insert((dist[u], u))         // добавляем улучшенную пару в кучу — O(log E)
+
+  return dist
+
+// ОЦЕНКА O(E log V):
+// - Каждое ребро даёт не более 1 вставки в кучу → O(E) вставок
+// - Каждая вставка/извлечение: O(log E) = O(log V²) = O(2 log V) = O(log V)
+// - Итого: E × O(log V) = O(E log V)
+// - При E ≈ V: O(V log V) — намного лучше O(V²)`},
+
+{h:"Сравнение реализаций",x:{hd:["Реализация","Время","Память","Когда использовать"],rw:[
+  ["Наивная (массив)","O(V² + E)","O(V)","Плотные графы E ≈ V²"],
+  ["С min-кучей","O(E log V)","O(V + E)","Разреженные графы E << V²"]
+]}}
+],g:[
+  ["Дейкстра","Кратчайшие пути от источника (только w ≥ 0!)"],
+  ["Релаксация","dist[u] = min(dist[u], dist[v] + w)"],
+  ["Финализация","Закрытая вершина — расстояние оптимально"],
+  ["Min-heap","O(log n) insert/extract_min"],
+  ["O(E log V)","С кучей: E вставок × O(log V)"],
+  ["O(V²+E)","Наивный: V итераций × O(V) поиск минимума"],
+  ["Устаревшая запись","d > dist[v]: старая запись в куче — пропускаем"]
+],
+q:[
+  {q:"Почему Дейкстра не работает с отрицательными весами?",o:["Куча не поддерживает","Финализированная вершина может улучшиться позже — поздно","Переполнение","Работает"],c:1,e:"Алгоритм финализирует (закрывает) вершины. Отрицательное ребро может улучшить путь к уже закрытой — но алгоритм это игнорирует."},
+  {q:"Сложность Дейкстры с min-кучей?",o:["O(V²)","O(E + V log V)","O(E log V)","O(V log V)"],c:2,e:"E релаксаций по O(log V) каждая → O(E log V)."},
+  {q:"Зачем проверка 'if d > dist[v]: continue' в реализации с кучей?",o:["Для отриц. весов","Устаревшие записи в куче — dist уже улучшен","Ускорение BFS","Не нужна"],c:1,e:"В куче могут быть старые (худшие) пары для v. Пропускаем их."}
+]},
+
+/* ═══════════════════════════════════════════════════════
+   БИЛЕТ 18 — СНМ / DSU. MST
+═══════════════════════════════════════════════════════ */
+{n:"18",t:"СНМ / DSU. Минимальное остовное дерево.",q_text:"Система непересекающихся множеств. Описание структуры. Эвристика по размеру. Эвристика сжатия пути. Асимптотика операций. Минимальное остовное дерево.",s:[
+{h:"Система непересекающихся множеств (СНМ/DSU)",b:`<strong>DSU (Disjoint Set Union)</strong>, или СНМ — структура данных для хранения разбиения множества элементов на <strong>непересекающиеся группы</strong> (компоненты).
+
+<strong>Основные операции:</strong>
+— <strong>find(x)</strong> — найти <strong>представителя</strong> (корень) группы, которой принадлежит x.
+— <strong>union(x, y)</strong> — объединить группы, которым принадлежат x и y.
+
+<strong>Представление:</strong> каждая группа — дерево. Корень дерева = представитель группы. Массив parent[]: parent[x] = родитель x; если parent[x] == x, то x — корень (представитель).
+
+<strong>Применение:</strong>
+— Алгоритм Краскала (MST).
+— Объединение компонент связности.
+— Задачи об объединении и проверке принадлежности к одной группе.`},
+
+{h:"DSU: базовая реализация и эвристики",c:`class DSU:
+  def __init__(self, n):
+    self.parent = list(range(n))   // parent[i] = i: каждый элемент — свой корень
+    self.size = [1] * n            // size[i] = размер дерева с корнем i (изначально 1)
+
+  // ── FIND с эвристикой СЖАТИЯ ПУТИ (Path Compression): O(α(n)) ──
+  def find(self, x):
+    if self.parent[x] != x:        // x — не корень своего дерева
+      // СЖАТИЕ ПУТИ: рекурсивно находим корень И переподвешиваем x прямо к нему
+      // Все узлы на пути от x до корня теперь напрямую указывают на корень
+      self.parent[x] = self.find(self.parent[x])
+    return self.parent[x]          // возвращаем корень — представитель группы
+
+  // ── UNION с эвристикой ПО РАЗМЕРУ (Union by Size): O(α(n)) ──
+  def union(self, x, y):
+    rx = self.find(x)              // находим представителя группы x
+    ry = self.find(y)              // находим представителя группы y
+    if rx == ry: return False      // уже в одной группе — ничего не делаем
+    // ОБЪЕДИНЕНИЕ ПО РАЗМЕРУ: меньшее дерево присоединяем под большее
+    // Гарантирует: высота дерева не превышает log(n) без сжатия пути
+    if self.size[rx] < self.size[ry]:
+      rx, ry = ry, rx              // убеждаемся: rx — корень большего дерева
+    self.parent[ry] = rx           // меньшее дерево ry присоединяем к большему rx
+    self.size[rx] += self.size[ry] // обновляем размер объединённого дерева
+    return True                    // возвращаем True: объединение произошло`},
+
+{h:"Эвристики и асимптотика",b:`<strong>Эвристика 1: Объединение по размеру (Union by Size / Rank)</strong>
+При union: меньшее дерево присоединяем к большему. Гарантирует высоту дерева O(log n) без сжатия пути.
+
+<strong>Эвристика 2: Сжатие пути (Path Compression)</strong>
+При find(x): все узлы на пути от x до корня переподвешиваются напрямую к корню. Следующие вызовы find из этих узлов — мгновенные.
+
+<strong>Вместе дают амортизированную O(α(n))</strong>, где α — <strong>обратная функция Аккермана</strong>. Для всех практических n (до 10⁸⁰) α(n) ≤ 4, что практически равно O(1).`,x:{hd:["Эвристики","find(x)","union(x,y)"],rw:[
+  ["Без оптимизаций","O(n)","O(n)"],
+  ["Только Union by Size","O(log n)","O(log n)"],
+  ["Только Path Compression","O(log n) аморт.","O(1)"],
+  ["Обе вместе","O(α(n)) ≈ O(1)","O(α(n)) ≈ O(1)"]
+]}},
+
+{h:"Минимальное остовное дерево — алгоритм Краскала",b:`<strong>Минимальное остовное дерево (MST)</strong> — остовное дерево с минимальной суммой весов рёбер.
+
+<strong>Остовное дерево</strong> — связный подграф без циклов, включающий все вершины (V-1 рёбер).
+
+<strong>Алгоритм Краскала:</strong>
+1. Сортируем все рёбра по возрастанию веса — O(E log E).
+2. Жадно перебираем рёбра: если вершины ребра в разных компонентах — добавляем в MST, объединяем компоненты через DSU.
+3. Останавливаемся когда V-1 ребро добавлено.
+
+<strong>Корректность (теорема о разрезе):</strong> наилегчайшее ребро любого разреза входит в некоторое MST.`,c:`function kruskal(graph):
+  dsu = DSU(V)                               // каждая вершина — отдельная компонента
+  edges = sorted(graph.edges(), key=lambda e: e.w)  // сортируем по весу — O(E log E)
+  mst = []                                   // рёбра минимального остовного дерева
+
+  for (u, v, w) in edges:                    // перебираем рёбра от наименьшего
+    if dsu.union(u, v):                      // u и v в разных компонентах? — объединяем
+      mst.append((u, v, w))                  // добавляем ребро в MST
+    if len(mst) == V - 1: break              // MST готово: V вершин → V-1 рёбер
+
+  return mst
+
+// ЖАДНОСТЬ: добавляем наилегчайшее ребро которое не создаёт цикл.
+// Проверка цикла: если u и v уже в одной компоненте DSU — ребро создаст цикл.
+// Сложность: O(E log E) сортировка + O(E·α(V)) DSU ≈ O(E log E)`}
+],g:[
+  ["DSU/СНМ","Система непересекающихся множеств — разбиение на группы"],
+  ["find(x)","Найти представителя (корень) группы x"],
+  ["union(x,y)","Объединить группы элементов x и y"],
+  ["Path compression","parent[x] = find(parent[x]) — все к корню напрямую"],
+  ["Union by size","Меньшее дерево под большее — высота O(log n)"],
+  ["α(n)","Обратная Аккермана: ≤ 4 для всех практических n — O(1)"],
+  ["MST","Minimum Spanning Tree — мин. остовное дерево"],
+  ["Краскал","Рёбра по весу + DSU проверка цикла — O(E log E)"]
+],
+q:[
+  {q:"Что делает сжатие пути в DSU?",o:["Удаляет лишние рёбра","При find() все узлы на пути переподвешиваются прямо к корню","Уменьшает число групп","Сортирует элементы"],c:1,e:"parent[x]=find(parent[x]). Следующие find() из этих узлов — O(1) практически."},
+  {q:"Сложность DSU с обеими эвристиками?",o:["O(log n)","O(n)","O(α(n)) ≈ O(1)","O(log log n)"],c:2,e:"Union by size + path compression → O(α(n)). α(n) ≤ 4 для всех реальных n."},
+  {q:"Почему Краскал добавляет ребро только если вершины в разных компонентах?",o:["Ограничение алгоритма","Иначе создаётся цикл — MST дерево без циклов","Ускорение работы","Необязательное условие"],c:1,e:"MST = дерево = без циклов. Одна компонента DSU → ребро создаст цикл → пропускаем."}
+]}
+];
+</script>
+
+<!-- app -->
+<script>
+/* ═══════════════════════════════════════════
+   INTERACTIVE BEAR — cursor tracking + tassel sway
+═══════════════════════════════════════════ */
+(function(){
+  const stage = document.getElementById('bearStage');
+  const svg = document.getElementById('bearSvg');
+  const pL = document.getElementById('pL');
+  const pR = document.getElementById('pR');
+  const head = document.getElementById('bearHead');
+  const tassel = document.getElementById('tassel');
+  const bearAll = document.getElementById('bearAll');
+
+  if(!stage || !svg) return;
+
+  // Track viewport mouse, aim pupils/head at cursor
+  let mx = 0, my = 0, tx = 0, ty = 0;
+  window.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+  });
+  // also support touch drag
+  window.addEventListener('touchmove', e=>{
+    if(e.touches[0]){ mx = e.touches[0].clientX; my = e.touches[0].clientY; }
+  }, {passive:true});
+
+  // scroll parallax: bear rises slightly
+  let scrollShift = 0;
+  window.addEventListener('scroll', ()=>{
+    const s = window.scrollY;
+    scrollShift = Math.min(200, s * .4);
+    bearAll.style.transform = `translateY(${-scrollShift*.6}px) rotate(${Math.sin(s/300)*4}deg)`;
+  });
+
+  function loop(){
+    // smooth follow
+    tx += (mx - tx) * .08;
+    ty += (my - ty) * .08;
+
+    const rect = svg.getBoundingClientRect();
+    const cx = rect.left + rect.width/2;
+    const cy = rect.top + rect.height/2;
+    const dx = (tx - cx) / rect.width;
+    const dy = (ty - cy) / rect.height;
+
+    // pupils: limit to +-8px
+    const px = Math.max(-8, Math.min(8, dx * 18));
+    const py = Math.max(-6, Math.min(6, dy * 14));
+    pL.setAttribute('cx', 160 + px);
+    pL.setAttribute('cy', 128 + py);
+    pR.setAttribute('cx', 240 + px);
+    pR.setAttribute('cy', 128 + py);
+
+    // head tilts a tiny bit
+    const tiltX = Math.max(-8, Math.min(8, dx * 20));
+    const tiltY = Math.max(-5, Math.min(5, dy * 10));
+    head.style.transform = `translate(${tiltX*.4}px, ${tiltY*.4}px) rotate(${tiltX*.2}deg)`;
+
+    // tassel sways
+    const sway = Math.sin(Date.now()/400)*5 + dx*8;
+    tassel.style.transform = `rotate(${sway}deg)`;
+    tassel.style.transformOrigin = '246px 148px';
+
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ═══════════════════════════════════════════
+   CLOUD LAYOUT — spread 18 clouds across
+   a long vertical canvas, alternating sides
+═══════════════════════════════════════════ */
+const CLOUD_SHAPES = ['cloudShapeA','cloudShapeB','cloudShapeC','cloudShapeD'];
+const CLOUD_POSITIONS = [];
+
+function genCloudPositions(){
+  // pseudo-random but deterministic
+  const positions = [];
+  let y = 220;
+  for(let i=0; i<18; i++){
+    const pct = 10 + ((i*17 + 8) % 72); // 10..82%
+    const off = (Math.sin(i*1.7)*6); // small random offset
+    const left = Math.max(4, Math.min(84, pct + off));
+    positions.push({
+      top: y,
+      leftPct: left,
+      shape: CLOUD_SHAPES[i % 4],
+      dur: 6 + (i % 4) * 1.5,
+      delay: (i*0.3) % 3,
+      scale: .85 + ((i*13)%20)/50  // 0.85..1.25
+    });
+    // stagger vertical distance
+    y += 180 + ((i*7) % 120);
+  }
+  return positions;
+}
+
+function renderClouds(){
+  const container = document.getElementById('cloudsContainer');
+  const positions = genCloudPositions();
+  CLOUD_POSITIONS.length = 0; CLOUD_POSITIONS.push(...positions);
+
+  const maxY = positions[positions.length-1].top + 300;
+  document.getElementById('cloudsSection').style.setProperty('--ch', maxY + 'px');
+
+  container.innerHTML = positions.map((p, i) => {
+    const t = T[i];
+    const titleShort = (t.t || '').length > 28 ? t.t.slice(0,26)+'…' : t.t;
+    const huedur = 10 + (i % 5) * 2;
+    const huedelay = (i * 0.7) % 5;
+    return `
+      <div class="cloud drift"
+           style="top:${p.top}px; left:${p.leftPct}%; transform-origin:center; --dur:${p.dur}s; --delay:${p.delay}s; --huedur:${huedur}s; --huedelay:${huedelay}s; transform: scale(${p.scale});"
+           onclick="openReader(${i})">
+        <svg class="cloud-svg" viewBox="0 0 300 180" preserveAspectRatio="xMidYMid meet"><use href="#${p.shape}"/></svg>
+        <div class="cnum">${t.n}</div>
+        <div class="clabel">${titleShort}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* birds sprinkled behind clouds */
+function renderBirds(){
+  const layer = document.getElementById('birdsLayer');
+  let html = '';
+  for(let i=0; i<14; i++){
+    const top = 100 + i*240 + (i%3)*40;
+    const left = 5 + (i*23) % 85;
+    html += `<div class="bird" style="top:${top}px; left:${left}%; animation: drift ${5 + (i%3)*2}s ease-in-out infinite; animation-delay:${(i*.3)%2}s;">~  ^  ~</div>`;
+  }
+  layer.innerHTML = html;
+}
+
+/* stars in night footer */
+function renderStars(){
+  const layer = document.getElementById('starsLayer');
+  let html = '';
+  for(let i=0; i<60; i++){
+    const top = Math.random()*100;
+    const left = Math.random()*100;
+    const delay = Math.random()*3;
+    html += `<div class="star" style="top:${top}%; left:${left}%; animation-delay:${delay}s;"></div>`;
+  }
+  layer.innerHTML = html;
+}
+
+/* ═══════════════════════════════════════════
+   READER — opens a ticket
+═══════════════════════════════════════════ */
+let currentTicket = 0;
+const visited = new Set();
+
+function esc(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function openReader(i){
+  currentTicket = i;
+  visited.add(i);
+  updateProgress();
+  document.getElementById('reader').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderTicket(i);
+  buildStrip();
+  document.getElementById('reader').scrollTop = 0;
+}
+
+function closeReader(){
+  document.getElementById('reader').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function goTicket(i){
+  if(i<0 || i>=T.length) return;
+  currentTicket = i;
+  visited.add(i);
+  updateProgress();
+  renderTicket(i);
+  buildStrip();
+  document.getElementById('reader').scrollTop = 0;
+}
+
+function buildStrip(){
+  const s = document.getElementById('cloudStrip');
+  s.innerHTML = T.map((t,i) =>
+    `<button class="cs-btn ${i===currentTicket?'active':''}" onclick="goTicket(${i})" title="${t.t}">${t.n}</button>`
+  ).join('');
+  // scroll active into view
+  setTimeout(()=>{
+    const active = s.querySelector('.cs-btn.active');
+    if(active) active.scrollIntoView({inline:'center', block:'nearest'});
+  }, 50);
+}
+
+function updateProgress(){
+  document.getElementById('progressMeta').textContent = `${visited.size} / 18`;
+}
+
+/* state for quiz answers */
+const QA = {};
+
+function renderTicket(i){
+  const t = T[i];
+  document.getElementById('rChip').textContent = `БИЛЕТ ${t.n}`;
+  const wrap = document.getElementById('ticketWrap');
+
+  let h = `<div class="ticket-head">
+    <span class="ticket-num">БИЛЕТ ${t.n} / 18</span>
+    <h2 class="ticket-title">${t.t}</h2>
+  </div>`;
+
+  if(t.q_text){
+    h += `<div class="ticket-question-block">
+      <div class="ticket-question-label">◈ Вопрос билета</div>
+      <div class="ticket-question-text">${t.q_text}</div>
+    </div>`;
+  }
+
+  t.s.forEach(s => {
+    h += `<div class="sec"><div class="sec-h">${s.h}</div>`;
+    if(s.b) h += `<div class="sec-b">${s.b.replace(/\n/g,'<br>')}</div>`;
+    if(s.c) h += `<pre class="code">${esc(s.c)}</pre>`;
+    if(s.x){
+      h += `<table class="cxt"><thead><tr>${s.x.hd.map(c=>`<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+      s.x.rw.forEach(r => { h += `<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`; });
+      h += '</tbody></table>';
+    }
+    h += '</div>';
+  });
+
+  if(t.g && t.g.length){
+    h += `<div class="gloss"><div class="gloss-t">◈ Терминология и обозначения</div>`;
+    t.g.forEach(([k,v]) => {
+      h += `<div class="gloss-row"><span class="gloss-k">${k}</span><span class="gloss-v">${v}</span></div>`;
+    });
+    h += '</div>';
+  }
+
+  if(t.q && t.q.length){
+    const ans = QA[i] || {};
+    h += `<div class="quiz"><div class="quiz-title">✦ Проверь себя</div>`;
+    t.q.forEach((q,qi) => {
+      const done = ans[qi] !== undefined;
+      h += `<div class="qblock"><div class="qqtext">${qi+1}. ${q.q}</div><div class="qopts">`;
+      q.o.forEach((o,oi) => {
+        let cls = 'qopt';
+        if(done){
+          if(oi === q.c) cls += ' correct';
+          else if(oi === ans[qi] && ans[qi] !== q.c) cls += ' wrong';
+          else cls += ' reveal';
+        }
+        h += `<button class="${cls}" onclick="ansQ(${i},${qi},${oi})" ${done?'disabled':''}>
+          <span class="qletter">${String.fromCharCode(65+oi)}</span><span>${o}</span></button>`;
+      });
+      h += '</div>';
+      if(done){
+        const ok = ans[qi] === q.c;
+        h += `<div class="qfb ${ok?'correct':'wrong'} show">${ok?'✓ Верно. ':'✗ Неверно. '}${q.e}</div>`;
+      }
+      h += '</div>';
+    });
+    h += '</div>';
+  }
+
+  h += `<div class="arrows">
+    <button class="arrow-btn" onclick="goTicket(${i-1})" ${i===0?'disabled':''}>← Предыдущий</button>
+    <button class="arrow-btn" onclick="goTicket(${i+1})" ${i===T.length-1?'disabled':''}>Следующий →</button>
+  </div>`;
+
+  wrap.innerHTML = h;
+}
+
+function ansQ(ti, qi, oi){
+  if(!QA[ti]) QA[ti] = {};
+  QA[ti][qi] = oi;
+  renderTicket(ti);
+}
+
+/* keyboard nav */
+window.addEventListener('keydown', e => {
+  if(!document.getElementById('reader').classList.contains('open')) return;
+  if(e.key === 'Escape') closeReader();
+  if(e.key === 'ArrowLeft') goTicket(currentTicket - 1);
+  if(e.key === 'ArrowRight') goTicket(currentTicket + 1);
+});
+
+/* init */
+renderClouds();
+renderBirds();
+renderStars();
+
+/* open via URL hash */
+if(location.hash && /^#b(\d+)$/.test(location.hash)){
+  const i = parseInt(location.hash.match(/^#b(\d+)$/)[1],10) - 1;
+  if(i>=0 && i<18) openReader(i);
+}
+</script>
+
+</body>
+</html>
